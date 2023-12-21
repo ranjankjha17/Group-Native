@@ -16,17 +16,22 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": ""
+      "bundleIdentifier": "com.ranjankjha.group"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": ""
+      "package": "com.ranjankjha.group"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8ccce7ce-3fa2-4c51-8369-ba2fc4366301"
+      }
     }
   }
 }
