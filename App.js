@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { ErrorBoundary } from 'react-error-boundary';
+import { TestGetimage } from './components/TestGetimage';
 
 const Tab = createBottomTabNavigator();
 
@@ -42,7 +43,7 @@ export default function App() {
           })}
         >
           <Tab.Screen name="Home" component={MasterForm} />
-          <Tab.Screen name="Form" component={Form2} />
+          <Tab.Screen name="Form" component={TestGetimage} />
           <Tab.Screen name='New Group' component={NewGroup} />
         </Tab.Navigator>
       </NavigationContainer>
