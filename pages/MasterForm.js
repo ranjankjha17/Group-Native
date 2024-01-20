@@ -22,11 +22,6 @@ export const MasterForm = () => {
 
   });
 
-  const fetchCode = async () => {
-    const { data } = await axios.get(`${URL}/get-code`)
-    console.log(data.data)
-    setCodeNo(data.data)
-  }
   useEffect(() => {
     (async () => {
       if (Platform.OS !== 'web') {
@@ -36,19 +31,32 @@ export const MasterForm = () => {
         }
       }
     })();
+    
+    const fetchCode = async () => {
+      const { data } = await axios.get(`${URL}/get-code`)
+      console.log(data?.data)
+      setCodeNo(data?.data)
+    }
+  
     fetchCode()
 
   }, [codeNo]);
 
   useEffect(()=>{
     const getGroup = async () => {
-      const { data } = await axios.get(`${URL}/get-group`)
-      setGroupList(data.data)
-
+      try{
+        const response = await axios.get(`${URL}/get-group`)
+        const { data } = response;
+        const { success } = data;
+        if(success){
+          setGroupList(data?.data)
+        }  
+      }catch(error){
+        console.log(error.response.data.message)
+      }
     }
     getGroup()
-
-  })
+  },[])
 
   const handleChange = (field, value) => {
     setFormData({
@@ -169,7 +177,7 @@ export const MasterForm = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.heading}>Master Form</Text>
+      <Text style={styles.heading}>Registration</Text>
       <View style={styles.codeContainer}>
         <Text style={{ flex: 1 }}>Code</Text>
         <Text style={{ flex: 1 }}>{codeNo}</Text>
