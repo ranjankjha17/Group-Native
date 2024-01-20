@@ -10,8 +10,9 @@ import { RegisterList } from '../components/RegisterList';
 import { TestGetimage } from '../components/TestGetimage';
 import { Form2 } from './Form2';
 import { NewGroup } from './NewGroup'
+import { GroupList } from './GroupList';
 export const Dashboard = () => {
-  const [showRegisterForm, setShowRegisterForm] = useState(true); // Set to true by default
+  const [showRegisterForm, setShowRegisterForm] = useState(false);
   const [showGroupForm, setShowGroupForm] = useState(false);
   const [showForm, setShowForm] = useState(false);
 
@@ -69,7 +70,11 @@ export const Dashboard = () => {
           <MasterForm />
           <RegisterList />
         </>}
-      {showGroupForm && <NewGroup />}
+      {showGroupForm &&
+        <>
+          <NewGroup />
+          <GroupList />
+        </>}
       {showForm && <Form2 />}
     </ScrollView>
   )

@@ -1,20 +1,16 @@
 import { configureStore} from '@reduxjs/toolkit'
-// import billReducer from '../reducers/bill'
-// import tempOrderReducer from '../reducers/temp_order'
 import authSlice from '../reducers/login'
+import groupSlice from '../reducers/group'
 import logger from 'redux-logger'
 const rootReducer={
-    //bill:billReducer,
-    // tempOrder:tempOrderReducer,
     auth:authSlice,
+    group:groupSlice
 }
-
 
 const store=configureStore({
     reducer:rootReducer,
     middleware:(getDefaultMiddleware)=>getDefaultMiddleware({ serializableCheck: false}).concat(logger),
     devTools: process.env.NODE_ENV !== "production",
-
 })
 
 

@@ -2,8 +2,11 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import base64 from 'base64-js';
 import { View, Text, TouchableOpacity, Modal, Button, Image, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
 
 export const RegisterList = () => {
+    const groupName=useSelector(state=>state.group.groupname)
+    console.log(groupName)
     const [selectedData, setSelectedData] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
     const [regData, setRegData] = useState([])
@@ -14,7 +17,7 @@ export const RegisterList = () => {
             setRegData(data?.data)
         }
         getImageData()
-    }, [])
+    }, [groupName])
 
     const handleNameClick = (data) => {
         setSelectedData(data);
@@ -34,9 +37,13 @@ export const RegisterList = () => {
 if(!regData){
     return(<Text>Loading...</Text>)
 }
+
+const filterRegData=regData.filter((e)=>e.groupbc===groupName)
+console.log(filterRegData)
     return (
         <View>
-            {regData?.map((item, index) => (
+            {
+            filterRegData?.map((item, index) => (
                 <TouchableOpacity key={index} onPress={() => handleNameClick(item)}>
                     <View style={{ padding: 10, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
                         <Text>{item.name}</Text>

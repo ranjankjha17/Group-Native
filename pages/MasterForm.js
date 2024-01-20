@@ -4,9 +4,11 @@ import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 import { Picker } from '@react-native-picker/picker';
 import { URL } from '../services/services';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { addGroup } from '../reducers/group';
 
 export const MasterForm = () => {
+  const dispatch = useDispatch()
   const [codeNo, setCodeNo] = useState('')
   const [groupList, setGroupList] = useState([])
   const [selectedValue, setSelectedValue] = useState('');
@@ -31,32 +33,34 @@ export const MasterForm = () => {
         }
       }
     })();
-    
+
     const fetchCode = async () => {
       const { data } = await axios.get(`${URL}/get-code`)
       console.log(data?.data)
       setCodeNo(data?.data)
     }
-  
+
     fetchCode()
 
   }, [codeNo]);
 
-  useEffect(()=>{
+  useEffect(() => {
     const getGroup = async () => {
-      try{
+      try {
         const response = await axios.get(`${URL}/get-group`)
         const { data } = response;
         const { success } = data;
-        if(success){
+        if (success) {
           setGroupList(data?.data)
-        }  
-      }catch(error){
+
+        }
+      } catch (error) {
         console.log(error.response.data.message)
       }
     }
     getGroup()
-  },[])
+    dispatch(addGroup(formData.groupbc))
+  }, [formData.groupbc])
 
   const handleChange = (field, value) => {
     setFormData({
@@ -296,7 +300,7 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
   },
-  
+
   photoContainer: {
     flexDirection: 'column',
     // justifyContent: 'space-between',

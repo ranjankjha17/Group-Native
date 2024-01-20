@@ -1,16 +1,16 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { URL, createNewGroup } from '../services/services';
+import { useSelector } from 'react-redux';
 
 export const NewGroup = () => {
+    const groupLength=useSelector((state)=>state.group.groupLength)
     const [formData, setFormData] = useState({
         groupName: '',
         amount: '',
         members: '',
-
     });
-
     const handleChange = (field, value) => {
         setFormData({
             ...formData,
@@ -18,45 +18,31 @@ export const NewGroup = () => {
         });
     };
     const handleSubmit = async () => {
-
-        // if(formData.groupName&&formData.amount&&formData.members){
-            
-        // }
         console.log(formData)
         const headers = {
             Accept: 'application/json',
             'Content-Type': 'multipart/form-data'
-           };
-    
+           };    
         try {
-            const { data } = await axios.post(`${URL}/create-group`, formData)
-            //const data=await createNewGroup(formData)
-            // const {data}=await axios({
-            //     method: 'POST',
-            //     url: 'https://reactnativeserver.vercel.app/create-group',
-            //     data: formData,
-            //     headers:headers
-            //   })
-              
+            const { data } = await axios.post(`${URL}/create-group`, formData)              
             const { message, success } = data;
             if (success) {
                 setFormData({
                     groupName: '',
                     amount: '',
                     members: '',
-
                 })
                 alert("New Group Created")
-
             }
         } catch (error) {
             console.error('Error:', error.message);
 
         }
-
     }
+    
+    useEffect(()=>{
 
-
+    },[groupLength])
     return (
         <View style={styles.container}>
             <Text style={styles.heading}>New Group Creation</Text>
