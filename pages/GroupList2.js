@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { URL } from '../services/services';
 
-export const GroupList= () => {
+export const GroupList2 = () => {
   const [groupList, setGroupList] = useState([]);
 
   const getGroup = async () => {
@@ -13,7 +13,7 @@ export const GroupList= () => {
       const { success } = data;
       if (success) {
         setGroupList(data?.data);
-        //console.log(data?.data);
+        console.log(data?.data);
       }
     } catch (error) {
       console.log(error.response.data.message);

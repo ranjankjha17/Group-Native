@@ -12,7 +12,7 @@ const groupSlice = createSlice({
             state.groupname = action.payload;
         },
         groupListLength:(state,action)=>{
-            state.groupLength = action.payload;
+            state.groupLength += 1;
         },
         resetGroup: state => {
             state.groupname = "";

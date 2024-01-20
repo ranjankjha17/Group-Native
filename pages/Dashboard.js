@@ -11,6 +11,7 @@ import { TestGetimage } from '../components/TestGetimage';
 import { Form2 } from './Form2';
 import { NewGroup } from './NewGroup'
 import { GroupList } from './GroupList';
+import { GroupList2 } from './GroupList2';
 export const Dashboard = () => {
   const [showRegisterForm, setShowRegisterForm] = useState(false);
   const [showGroupForm, setShowGroupForm] = useState(false);

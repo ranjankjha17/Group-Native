@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 
 export const NewGroup = () => {
     const groupLength=useSelector((state)=>state.group.groupLength)
+   // console.log(groupLength)
     const [formData, setFormData] = useState({
         groupName: '',
         amount: '',
@@ -17,6 +18,10 @@ export const NewGroup = () => {
             [field]: value,
         });
     };
+    // useEffect(()=>{
+
+    // },[groupLength])
+
     const handleSubmit = async () => {
         console.log(formData)
         const headers = {
@@ -40,9 +45,6 @@ export const NewGroup = () => {
         }
     }
     
-    useEffect(()=>{
-
-    },[groupLength])
     return (
         <View style={styles.container}>
             <Text style={styles.heading}>New Group Creation</Text>
