@@ -6,11 +6,17 @@ import axios from 'axios';
 import { URL } from '../services/services';
 
 export const Form2 = () => {
+    const [selectedName, setSelectedName] = useState('');
+    const [regData, setRegData] = useState([])
+    //console.log(regData)
     const [selectedValue, setSelectedValue] = useState('');
     const [date, setDate] = useState(new Date());
     const [showPicker, setShowPicker] = useState(false);
     const [groupList, setGroupList] = useState([])
     const [bcamount, setBcamount] = useState('');
+    const [amount, setAmount] = useState('')
+    const [bcPayment, setBCPayment] = useState('')
+    console.log(bcPayment)
     const [formData, setFormData] = useState({
         date: '',
         group: '',
@@ -28,14 +34,30 @@ export const Form2 = () => {
         }
         getGroup()
     }, [])
-
-    const handleChange = (field, value) => {
+    useEffect(() => {
+        async function getRegData() {
+            const { data } = await axios.get('https://reactnativeserver.vercel.app/getimage')
+            //console.log(data?.data)
+            setRegData(data?.data)
+        }
+        getRegData()
+    }, [formData.group])
+    const filterRegData = regData.filter((e) => e.groupbc === formData.group)
+    console.log(filterRegData)
+    const handleNameSelection = (name, code) => {
+        setSelectedName(name);
+        setSelectedCode(code); // Assuming setSelectedCode is a state setter for the code
+        handleChange('name', name, code); // Pass both name and code to handleChange
+    };
+    
+    const handleChange = (field, value, code) => {
         setFormData({
             ...formData,
             [field]: value,
-        });  
+            c_code: code // Store the code in the formData's c_code field
+        });
     };
-    const onChange = (event, selectedDate) => {
+            const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
         setShowPicker(Platform.OS === 'ios');
         setDate(currentDate);
@@ -47,46 +69,61 @@ export const Form2 = () => {
     };
 
     const handleSubmit = async () => {
-        // for (const key in formData) {
-        //     if (formData[key].trim() === '') {
-        //       Alert.alert('Validation Error', `Please enter a value for ${key}`);
-        //       return; // Stop submission if any field is blank
-        //     }
-        //   }      
-       formData["bcAmount"]=bcamount.toString()
+        formData["bcAmount"] = bcamount.toString()
+        formData['amount'] = amount.toString()
+        formData['bc_payment'] = bcPayment.toString()
+        formData['gsum'] = totalSlno
+       // formData['c_code'] = ''
+        //console.log(formData)
         const headers = {
             Accept: 'application/json',
             'Content-Type': 'multipart/form-data'
         };
-
-        try {
-           const { data } = await axios.post(`${URL}/create-form2`,formData)
-            // const {data}=await axios({
-            //     method: 'POST',
-            //     url: 'http://http://172.24.0.168:5000/create-form2',
-            //     data: formData,
-            //     headers:headers
-            //   })
-
-            const { message, success } = data;
-            if (success) {
-                setFormData({
-                    date: '',
-                    group: '',
-                    name: '',
-                    bcAmount: '',
-                    intNo: '',
-                    percentage: '',
-                    amount: '',
-                })
-                setSelectedValue('') 
-                setBcamount('')
-                alert("Your data is saved")
-            }
-        } catch (error) {
-            console.error('Error:', error.message);
-        }
+        console.log(formData)
+        // try {
+        //     const { data } = await axios.post(`${URL}/create-form2`, formData)
+        //     const { message, success } = data;
+        //     if (success) {
+        //         setFormData({
+        //             date: '',
+        //             group: '',
+        //             name: '',
+        //             bcAmount: '',
+        //             intNo: '',
+        //             percentage: '',
+        //             amount: '',
+        //         })
+        //         setSelectedValue('')
+        //         setBcamount('')
+        //         alert("Your data is saved")
+        //     }
+        // } catch (error) {
+        //     console.error('Error:', error.message);
+        // }
     }
+
+    useEffect(() => {
+        // console.log((bcamount * formData.percentage) / 100)
+        if (formData.percentage) {
+            setAmount((parseInt(bcamount) * parseFloat(formData.percentage)) / 100) / filterRegData.length
+        }
+
+    }, [formData.percentage, amount])
+
+    useEffect(() => {
+        if (formData.percentage) {
+            setBCPayment(bcamount - ((parseInt(bcamount) * parseFloat(formData.percentage)) / 100));
+        }
+    }, [formData.percentage, bcamount]);
+
+    const totalSlno = filterRegData.reduce((total, currentItem) => {
+        if (currentItem.slno && typeof currentItem.slno === 'number') {
+            return total + currentItem.slno;
+        }
+        return total;
+    }, 0); // Initial value of total is 0
+
+    console.log("Total Slno:", totalSlno);
 
     return (
         <View style={styles.container}>
@@ -104,12 +141,13 @@ export const Form2 = () => {
                     mode="date"
                     is24Hour={true}
                     display="default"
-                    onChange={onChange}                    
+                    onChange={onChange}
                 />
             )}
 
             <View style={styles.pickerContainer}>
                 <Text style={styles.label}>Group</Text>
+                <Text style={styles.label}>{totalSlno}</Text>
                 <Picker
                     style={styles.picker}
                     selectedValue={selectedValue}
@@ -132,12 +170,27 @@ export const Form2 = () => {
                 </Picker>
             </View>
 
-            <TextInput
+            {/* <TextInput
                 style={styles.input}
                 placeholder="Name"
                 onChangeText={(text) => handleChange('name', text)}
                 value={formData.name}
-            />
+            /> */}
+            <View style={styles.pickerContainer}>
+                <Text style={styles.label}>Name</Text>
+                <Picker
+                    style={styles.picker}
+                    selectedValue={selectedName}
+                    onValueChange={(itemValue) => handleNameSelection(itemValue)}
+                >
+                    <Picker.Item label="Select Name" value="" />
+                    {filterRegData.map((e) => (
+
+                        <Picker.Item key={e.master_id} label={` (${e.code}) ${e.name}`} value={e.name} />
+
+                    ))}
+                </Picker>
+            </View>
             <TextInput
                 style={styles.input}
                 placeholder="BC Amount"
@@ -160,9 +213,21 @@ export const Form2 = () => {
             <TextInput
                 style={styles.input}
                 placeholder="Amount"
-                onChangeText={(text) => handleChange('amount', text)}
-                value={formData.amount}
+                // onChangeText={(text) => handleChange('amount', text)}
+                value={amount}
+                editable={false}
+
             />
+            {/* <Text>{Calculate_amount()}</Text> */}
+            <TextInput
+                style={styles.input}
+                placeholder="BCPayment"
+                // onChangeText={(text) => handleChange('bcpayment', text)}
+                // value={formData.bcPayment}
+                value={bcPayment.toString()}
+                editable={false}
+            />
+
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.button} onPress={handleSubmit}>
                     <Text style={styles.buttonText}>Save</Text>

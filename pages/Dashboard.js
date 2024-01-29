@@ -63,7 +63,7 @@ export const Dashboard = () => {
           <Text style={DashboardStyles.buttonText}>New Group</Text>
         </TouchableOpacity>
         <TouchableOpacity style={DashboardStyles.button} onPress={handleFormButtonClick} >
-          <Text style={DashboardStyles.buttonText}>Form</Text>
+          <Text style={DashboardStyles.buttonText}>Contract</Text>
         </TouchableOpacity>
       </View>
       {showRegisterForm &&
@@ -95,7 +95,7 @@ const DashboardStyles = StyleSheet.create({
     width: '100%',
   },
   button: {
-    backgroundColor: 'green',
+    backgroundColor: 'purple',
     padding: 10,
     borderRadius: 5,
     flex: 1,
