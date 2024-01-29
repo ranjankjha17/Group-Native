@@ -10,15 +10,14 @@ export const Form2 = () => {
     const [regData, setRegData] = useState([])
     //console.log(regData)
     const [selectedValue, setSelectedValue] = useState('');
+   // console.log(selectedValue)
     const [date, setDate] = useState(new Date());
     const [showPicker, setShowPicker] = useState(false);
     const [groupList, setGroupList] = useState([])
     const [bcamount, setBcamount] = useState('');
     const [amount, setAmount] = useState('')
     const [bcPayment, setBCPayment] = useState('')
-    console.log(bcPayment)
-    const [selectedCode,setSelectedCode]=useState('')
-    console.log(selectedCode)
+    //console.log(bcPayment)
     const [formData, setFormData] = useState({
         date: '',
         group: '',
@@ -26,7 +25,8 @@ export const Form2 = () => {
         bcAmount: '',
         intNo: '',
         percentage: '',
-        amount: ''
+        amount: '',
+        c_code:''
     });
     useEffect(() => {
         const getGroup = async () => {
@@ -46,17 +46,28 @@ export const Form2 = () => {
     }, [formData.group])
     const filterRegData = regData.filter((e) => e.groupbc === formData.group)
     console.log(filterRegData)
-    const handleNameSelection = (name, code) => {
+    // const handleNameSelection = (name) => {
+    //     setSelectedName(name);
+    //     handleChange('name', name);
+    //     formData['name'] = name
+    //     console.log(formData.name)
+    // };
+    const handleNameSelection = (name) => {
         setSelectedName(name);
-        setSelectedCode(code); // Assuming setSelectedCode is a state setter for the code
-        handleChange('name', name, code); // Pass both name and code to handleChange
+        handleChange('name', name);
+            const selectedItem = filterRegData.find(item => item.name === name);
+            if (selectedItem) {
+            setFormData(prevState => ({
+                ...prevState,
+                c_code: selectedItem.code
+            }));
+        }
     };
-
-    const handleChange = (field, value, code) => {
+    
+    const handleChange = (field, value) => {
         setFormData({
             ...formData,
             [field]: value,
-            c_code: code // Store the code in the formData's c_code field
         });
     };
     const onChange = (event, selectedDate) => {
@@ -75,7 +86,7 @@ export const Form2 = () => {
         formData['amount'] = amount.toString()
         formData['bc_payment'] = bcPayment.toString()
         formData['gsum'] = totalSlno
-        formData['c_code'] = selectedCode.toString()
+       // formData['c_code'] = ''
         //console.log(formData)
         const headers = {
             Accept: 'application/json',
@@ -187,12 +198,9 @@ export const Form2 = () => {
                 >
                     <Picker.Item label="Select Name" value="" />
                     {filterRegData.map((e) => (
-                        <Picker.Item
-                            key={e.master_id}
-                            label={` (${e.code}) ${e.name}`}
-                            value={e.name}
-                            onPress={() => handleNameSelection(e.name, e.code)} // Pass name and code to handleNameSelection
-                        />
+
+                        <Picker.Item key={e.master_id} label={` (${e.code}) ${e.name}`} value={e.name} />
+
                     ))}
                 </Picker>
             </View>
