@@ -17,6 +17,8 @@ export const Form2 = () => {
     const [amount, setAmount] = useState('')
     const [bcPayment, setBCPayment] = useState('')
     console.log(bcPayment)
+    const [selectedCode,setSelectedCode]=useState('')
+    console.log(selectedCode)
     const [formData, setFormData] = useState({
         date: '',
         group: '',
@@ -49,7 +51,7 @@ export const Form2 = () => {
         setSelectedCode(code); // Assuming setSelectedCode is a state setter for the code
         handleChange('name', name, code); // Pass both name and code to handleChange
     };
-    
+
     const handleChange = (field, value, code) => {
         setFormData({
             ...formData,
@@ -57,7 +59,7 @@ export const Form2 = () => {
             c_code: code // Store the code in the formData's c_code field
         });
     };
-            const onChange = (event, selectedDate) => {
+    const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
         setShowPicker(Platform.OS === 'ios');
         setDate(currentDate);
@@ -73,7 +75,7 @@ export const Form2 = () => {
         formData['amount'] = amount.toString()
         formData['bc_payment'] = bcPayment.toString()
         formData['gsum'] = totalSlno
-       // formData['c_code'] = ''
+        formData['c_code'] = selectedCode.toString()
         //console.log(formData)
         const headers = {
             Accept: 'application/json',
@@ -185,9 +187,12 @@ export const Form2 = () => {
                 >
                     <Picker.Item label="Select Name" value="" />
                     {filterRegData.map((e) => (
-
-                        <Picker.Item key={e.master_id} label={` (${e.code}) ${e.name}`} value={e.name} />
-
+                        <Picker.Item
+                            key={e.master_id}
+                            label={` (${e.code}) ${e.name}`}
+                            value={e.name}
+                            onPress={() => handleNameSelection(e.name, e.code)} // Pass name and code to handleNameSelection
+                        />
                     ))}
                 </Picker>
             </View>
