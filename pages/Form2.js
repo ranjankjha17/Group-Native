@@ -85,47 +85,60 @@ export const Form2 = () => {
         formData["bcAmount"] = bcamount.toString()
         formData['amount'] = amount.toString()
         formData['bc_payment'] = bcPayment.toString()
-        formData['gsum'] = totalSlno
-       // formData['c_code'] = ''
-        //console.log(formData)
+        formData['gsum'] = totalSlno,
+        formData['user']=''
         const headers = {
             Accept: 'application/json',
             'Content-Type': 'multipart/form-data'
         };
         console.log(formData)
-        // try {
-        //     const { data } = await axios.post(`${URL}/create-form2`, formData)
-        //     const { message, success } = data;
-        //     if (success) {
-        //         setFormData({
-        //             date: '',
-        //             group: '',
-        //             name: '',
-        //             bcAmount: '',
-        //             intNo: '',
-        //             percentage: '',
-        //             amount: '',
-        //         })
-        //         setSelectedValue('')
-        //         setBcamount('')
-        //         alert("Your data is saved")
-        //     }
-        // } catch (error) {
-        //     console.error('Error:', error.message);
-        // }
+        try {
+            const { data } = await axios.post(`${URL}/create-form2`, formData)
+            const { message, success } = data;
+            if (success) {
+                setFormData({
+                    date: '',
+                    group: '',
+                    name: '',
+                    bcAmount: '',
+                    intNo: '',
+                    percentage: '',
+                    amount: '',
+                })
+                setSelectedValue('')
+                setBcamount('')
+                alert("Your data is saved")
+            }
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
     }
 
     useEffect(() => {
         // console.log((bcamount * formData.percentage) / 100)
         if (formData.percentage) {
-            setAmount((parseInt(bcamount) * parseFloat(formData.percentage)) / 100) / filterRegData.length
+            if(formData.percentage<=100){
+                setAmount((parseInt(bcamount) * parseFloat(formData.percentage)) / 100) / filterRegData.length
+            }
+            else{
+                setAmount(parseInt(bcamount) / filterRegData.length)
+            }
         }
+
+        
 
     }, [formData.percentage, amount])
 
     useEffect(() => {
         if (formData.percentage) {
-            setBCPayment(bcamount - ((parseInt(bcamount) * parseFloat(formData.percentage)) / 100));
+            if(formData.percentage<=100){
+                setBCPayment(bcamount - ((parseInt(bcamount) * parseFloat(formData.percentage)) / 100));
+                // setBCPayment(bcamount - amount)
+
+            }
+            else{
+                setBCPayment(bcamount - amount)
+            }
         }
     }, [formData.percentage, bcamount]);
 
