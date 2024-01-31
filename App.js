@@ -53,17 +53,17 @@ export default function App() {
     //   </NavigationContainer>
     // </ErrorBoundary>
 
-    // <ErrorBoundary FallbackComponent={ErrorHandler}>
-    //   <Provider store={store}>
-    //     <NavigationContainer>
-    //       <Stack.Navigator initialRouteName="Login">
-    //       <Stack.Screen name="Login" component={Login} />
-    //       <Stack.Screen name="Home" component={Dashboard} />
-    //       </Stack.Navigator>
-    //     </NavigationContainer>
-    //   </Provider>
-    //   </ErrorBoundary>
-    <Form2/>
+    <ErrorBoundary FallbackComponent={ErrorHandler}>
+      <Provider store={store}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Home" component={Dashboard} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
+      </ErrorBoundary>
+    // <Form2/>
   );
 }
 

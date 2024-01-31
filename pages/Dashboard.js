@@ -63,8 +63,15 @@ export const Dashboard = () => {
           <Text style={DashboardStyles.buttonText}>New Group</Text>
         </TouchableOpacity>
         <TouchableOpacity style={DashboardStyles.button} onPress={handleFormButtonClick} >
-          <Text style={DashboardStyles.buttonText}>Contract</Text>
+          <Text style={DashboardStyles.buttonText}>Auction</Text>
         </TouchableOpacity>
+        {/* <TouchableOpacity style={DashboardStyles.button} onPress={""} >
+          <Text style={DashboardStyles.buttonText}>Transection</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={DashboardStyles.button} onPress={""} >
+          <Text style={DashboardStyles.buttonText}>Report</Text>
+        </TouchableOpacity> */}
+
       </View>
       {showRegisterForm &&
         <>
