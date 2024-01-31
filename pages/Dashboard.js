@@ -12,6 +12,7 @@ import { Form2 } from './Form2';
 import { NewGroup } from './NewGroup'
 import { GroupList } from './GroupList';
 import { GroupList2 } from './GroupList2';
+import Logo from '../components/Logo';
 export const Dashboard = () => {
   const [showRegisterForm, setShowRegisterForm] = useState(false);
   const [showGroupForm, setShowGroupForm] = useState(false);
@@ -24,37 +25,30 @@ export const Dashboard = () => {
   useEffect(() => {
   }, [username])
   const handleRegisterButtonClick = () => {
-    setShowRegisterForm(true);
-    setShowGroupForm(false);
-    setShowForm(false)
+    // setShowRegisterForm(true);
+    // setShowGroupForm(false);
+    // setShowForm(false)
+    navigation.navigate('Register')
   };
 
   const handleGroupFormButtonClick = () => {
-    setShowGroupForm(true);
-    setShowRegisterForm(false);
-    setShowForm(false)
+    // setShowGroupForm(true);
+    // setShowRegisterForm(false);
+    // setShowForm(false)
+    navigation.navigate('Group')
 
   };
   const handleFormButtonClick = () => {
-    setShowForm(true)
-    setShowGroupForm(false);
-    setShowRegisterForm(false);
+    // setShowForm(true)
+    // setShowGroupForm(false);
+    // setShowRegisterForm(false);
+    navigation.navigate('Auction')
   };
 
   return (
     <ScrollView style={{ backgroundColor: "#fff" }}>
       <Logout />
-      {/* <MasterForm /> */}
-      {/* <GetRegister/> */}
-      {/* <NameList/> */}
-      {/* <RegisterList/> */}
-      {/* <TestGetimage/> */}
-
-      {/* <View style={DashboardStyles.buttonContainer}>
-        <Button title="Register" onPress={handleRegisterButtonClick} />
-        <Button title="Form" onPress={handleGroupFormButtonClick} />
-        <Button title="New Group" onPress={handleFormButtonClick} />
-      </View> */}
+      <Logo/>
       <View style={DashboardStyles.buttonContainer}>
         <TouchableOpacity style={DashboardStyles.button} onPress={handleRegisterButtonClick}>
           <Text style={DashboardStyles.buttonText}>Register</Text>
@@ -65,15 +59,15 @@ export const Dashboard = () => {
         <TouchableOpacity style={DashboardStyles.button} onPress={handleFormButtonClick} >
           <Text style={DashboardStyles.buttonText}>Auction</Text>
         </TouchableOpacity>
-        {/* <TouchableOpacity style={DashboardStyles.button} onPress={""} >
+        <TouchableOpacity style={DashboardStyles.button} onPress={""} >
           <Text style={DashboardStyles.buttonText}>Transection</Text>
         </TouchableOpacity>
         <TouchableOpacity style={DashboardStyles.button} onPress={""} >
           <Text style={DashboardStyles.buttonText}>Report</Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
 
       </View>
-      {showRegisterForm &&
+      {/* {showRegisterForm &&
         <>
           <MasterForm />
           <RegisterList />
@@ -83,7 +77,7 @@ export const Dashboard = () => {
           <NewGroup />
           <GroupList />
         </>}
-      {showForm && <Form2 />}
+      {showForm && <Form2 />} */}
     </ScrollView>
   )
 }
@@ -95,10 +89,10 @@ const DashboardStyles = StyleSheet.create({
 
   buttonContainer: {
     marginTop: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingLeft: 10,
+    flexDirection: 'column',
+    // justifyContent: 'space-between',
+    // alignItems: 'center',
+    // paddingLeft: 10,
     width: '100%',
   },
   button: {
@@ -106,7 +100,8 @@ const DashboardStyles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     flex: 1,
-    marginLeft: 5,
+    // marginLeft: 5,
+    marginTop:5
   },
   buttonText: {
     color: 'white',

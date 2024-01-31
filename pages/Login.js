@@ -19,9 +19,9 @@ export const Login = () => {
         return username
     }
     useEffect(() => {
-        const username=getName()
-        if(username){
-        navigation.navigate('Home');
+        const username = getName()
+        if (username) {
+            navigation.navigate('Home');
         }
 
     }, [])
@@ -64,9 +64,13 @@ export const Login = () => {
     }
     return (
         <ScrollView contentContainerStyle={LoginStyles.container}>
+            <View style={LoginStyles.headingContainer}>
+                <Text style={LoginStyles.heading}>Login to</Text>
+                <Text style={LoginStyles.heading}>your Account</Text>
+            </View>
             <TextInput
                 style={LoginStyles.input}
-                placeholder="UserName"
+                placeholder="Username"
                 onChangeText={(text) => handleChange('username', text)}
                 value={formData.username}
             />
@@ -79,7 +83,7 @@ export const Login = () => {
             />
             <View style={LoginStyles.buttonContainer}>
                 <TouchableOpacity style={LoginStyles.button} onPress={handleSubmit}>
-                    <Text style={LoginStyles.buttonText}>Login</Text>
+                    <Text style={LoginStyles.buttonText}>Log in</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>
@@ -89,7 +93,7 @@ export const Login = () => {
 const LoginStyles = StyleSheet.create({
     container: {
         flexGrow: 1,
-        backgroundColor: '#17202A',
+        backgroundColor: '#081b2f',
         alignItems: 'center',
         justifyContent: 'center',
         paddingLeft: 16,
@@ -97,31 +101,41 @@ const LoginStyles = StyleSheet.create({
         paddingTop: 1,
         paddingBottom: 1,
     },
+    headingContainer: {
+        marginBottom: 30
+    },
+    heading: {
+        textAlign: 'center',
+        fontWeight: '500',
+        color: '#f8f8f8',
+        fontSize: 30,
+    },
     input: {
         height: 40,
         borderColor: 'gray',
-        backgroundColor: "#D5F5E3",
+        backgroundColor: "#3b4858",
         borderWidth: 2,
         marginBottom: 10,
         paddingLeft: 10,
         width: '100%',
         fontWeight: "500",
         borderRadius: 5,
-
+        color: '#cfd3d6'
     },
     buttonContainer: {
         flexDirection: "row",
         width: '100%',
+        marginTop: 15
     },
     button: {
-        backgroundColor: 'blue',
+        backgroundColor: '#fbb718',
         padding: 10,
         borderRadius: 5,
         flex: 1,
         marginRight: 5,
     },
     buttonText: {
-        color: 'white',
+        color: '#fffdf8',
         textAlign: 'center',
         fontWeight: "500"
     },

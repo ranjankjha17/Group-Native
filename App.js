@@ -9,6 +9,9 @@ import store from './store/store';
 import { Dashboard } from './pages/Dashboard';
 import { Login } from './pages/Login';
 import { Form2 } from './pages/Form2';
+import { RegisterScreen } from './pages/RegisterScreen';
+import { NewGroupScreen } from './pages/NewGroupScreen';
+import { AuctionScreen } from './pages/AuctionScreen';
 
 // const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -59,6 +62,9 @@ export default function App() {
           <Stack.Navigator initialRouteName="Login">
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Home" component={Dashboard} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="Group" component={NewGroupScreen} />
+          <Stack.Screen name="Auction" component={AuctionScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
