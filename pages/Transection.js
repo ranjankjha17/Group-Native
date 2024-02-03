@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import base64 from 'base64-js';
-import { View, Text, TouchableOpacity, Modal, Button, Image, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Modal, Button, Image, StyleSheet, Picker, TextInput } from 'react-native';
 import { useSelector } from 'react-redux';
+import { RadioButton } from 'react-native-paper';
+
 
 export const Transection = () => {
     // const groupName=useSelector(state=>state.group.groupname)
@@ -10,12 +12,26 @@ export const Transection = () => {
     const [selectedData, setSelectedData] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
     const [regData, setRegData] = useState([])
-    const [selectedOption, setSelectedOption] = useState(null);
+    const [value, setValue] = useState('Receipt');
+    const [amountType, setAmountType] = useState('Credit');
+    const [selectedMode, setSelectedMode] = useState('Cash');
+    const [mobileNumber, setMobileNumber] = useState('');
+    const [neatText, setNeatText] = useState('');
 
-    const handleSelectOption = (option) => {
-        setSelectedOption(option);
+    const handleNeatTextChange = (text) => {
+        setNeatText(text);
     };
 
+
+
+    const handleMobileNumberChange = (text) => {
+        setMobileNumber(text);
+    };
+
+    const handleSubmit = () => {
+        // Handle submission with the mobile number
+        console.log('Submitted mobile number:', mobileNumber);
+    };
 
     useEffect(() => {
         async function getImageData() {
@@ -82,20 +98,66 @@ export const Transection = () => {
                                         style={styles.image}
                                     />
                                 )} */}
-                                <Text style={styles.label}>Select Transaction Type:</Text>
-                                <TouchableOpacity
-                                    style={[styles.radioButton, selectedOption === 'Receipt' && styles.radioButtonSelected]}
-                                    onPress={() => handleSelectOption('Receipt')}>
-                                    <Text style={styles.radioText}>Receipt</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={[styles.radioButton, selectedOption === 'Payment' && styles.radioButtonSelected]}
-                                    onPress={() => handleSelectOption('Payment')}>
-                                    <Text style={styles.radioText}>Payment</Text>
-                                </TouchableOpacity>
-                                <Text style={styles.selectedOptionText}>
-                                    Selected Option: {selectedOption ? selectedOption : 'None'}
-                                </Text>
+                                <View>
+                                    <Text style={{ fontSize: 18, marginBottom: 10 }}>Select Transaction Type:</Text>
+                                    <RadioButton.Group onValueChange={newValue => setValue(newValue)} value={value}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                                            <RadioButton.Android value="Receipt" color="#6200EE" />
+                                            <Text style={{ fontSize: 16 }}>Receipt</Text>
+                                        </View>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                            <RadioButton.Android value="Payment" color="#6200EE" />
+                                            <Text style={{ fontSize: 16 }}>Payment</Text>
+                                        </View>
+                                    </RadioButton.Group>
+                                    {/* <Text style={{ marginTop: 20, fontSize: 16 }}>Selected Option: {value}</Text> */}
+                                </View>
+                                <View>
+                                    <Text style={{ fontSize: 18, marginBottom: 10 }}>Select Amount Type:</Text>
+                                    <Picker
+                                        selectedValue={amountType}
+                                        style={{ height: 50}}
+                                        onValueChange={(itemValue, itemIndex) => setAmountType(itemValue)}
+                                    >
+                                        <Picker.Item label="Credit" value="Credit" />
+                                        <Picker.Item label="Debit" value="Debit" />
+                                    </Picker>
+                                    {/* <Text style={{ marginTop: 20, fontSize: 16 }}>Selected Amount Type: {amountType}</Text> */}
+                                </View>
+                                <View>
+                                    <Text style={{ fontSize: 18, marginBottom: 10 }}>Neat:</Text>
+                                    <TextInput
+                                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 20, padding: 10 }}
+                                        placeholder="Enter text for Neat"
+                                        value={neatText}
+                                        onChangeText={handleNeatTextChange}
+                                    />
+                                </View>
+                                <View>
+                                    <Text style={{ fontSize: 18, marginBottom: 10 }}>Select Payment Mode:</Text>
+                                    <Picker
+                                        selectedValue={selectedMode}
+                                        style={{ height: 50 }}
+                                        onValueChange={(itemValue, itemIndex) => setSelectedMode(itemValue)}
+                                    >
+                                        <Picker.Item label="Cash" value="Cash" />
+                                        <Picker.Item label="UPI" value="UPI" />
+                                    </Picker>
+                                    {/* <Text style={{ marginTop: 20, fontSize: 16 }}>Selected Mode: {selectedMode}</Text> */}
+                                </View>
+                                <View>
+                                    <Text style={{ fontSize: 18, marginBottom: 10 }}>Enter Mobile Number:</Text>
+                                    <TextInput
+                                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingHorizontal: 10 }}
+                                        onChangeText={handleMobileNumberChange}
+                                        value={mobileNumber}
+                                        placeholder="Mobile Number"
+                                        keyboardType="phone-pad"
+                                    // keyboardType="numeric"
+
+                                    />
+                                    <Button title="Submit" onPress={handleSubmit} />
+                                </View>
 
                             </View>
                         )}
@@ -125,31 +187,6 @@ const styles = StyleSheet.create({
         height: 100,
         marginLeft: 2,
         borderRadius: 5,
-    },
-    // container: {
-    //     flex: 1,
-    //     alignItems: 'center',
-    //     justifyContent: 'center',
-    //   },
-    //   label: {
-    //     fontSize: 18,
-    //     marginBottom: 10,
-    //   },
-    radioButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 10,
-    },
-    radioButtonSelected: {
-        backgroundColor: 'lightblue',
-    },
-    radioText: {
-        marginLeft: 10,
-        fontSize: 16,
-    },
-    selectedOptionText: {
-        marginTop: 20,
-        fontSize: 16,
     },
 
 })  
