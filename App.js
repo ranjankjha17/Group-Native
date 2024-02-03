@@ -12,6 +12,7 @@ import { Form2 } from './pages/Form2';
 import { RegisterScreen } from './pages/RegisterScreen';
 import { NewGroupScreen } from './pages/NewGroupScreen';
 import { AuctionScreen } from './pages/AuctionScreen';
+import { Transection } from './pages/Transection';
 
 // const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -58,7 +59,7 @@ export default function App() {
 
     <ErrorBoundary FallbackComponent={ErrorHandler}>
       <Provider store={store}>
-        <NavigationContainer>
+        {/* <NavigationContainer>
           <Stack.Navigator initialRouteName="Login">
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Home" component={Dashboard} />
@@ -66,7 +67,8 @@ export default function App() {
           <Stack.Screen name="Group" component={NewGroupScreen} />
           <Stack.Screen name="Auction" component={AuctionScreen} />
           </Stack.Navigator>
-        </NavigationContainer>
+        </NavigationContainer> */}
+        <Transection/>
       </Provider>
       </ErrorBoundary>
     // <Form2/>

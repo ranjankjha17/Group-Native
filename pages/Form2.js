@@ -44,7 +44,7 @@ export const Form2 = () => {
 
         }
         getintno()
-    }, [])
+    }, [formData.c_code])
 
     useEffect(() => {
         const getGroup = async () => {

@@ -106,7 +106,7 @@ const LoginStyles = StyleSheet.create({
     },
     heading: {
         textAlign: 'center',
-        fontWeight: '500',
+        fontWeight: '700',
         color: '#f8f8f8',
         fontSize: 30,
     },
