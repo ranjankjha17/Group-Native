@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 import { URL } from '../services/services';
 
 export const GroupList= () => {
   const [groupList, setGroupList] = useState([]);
+  const [loading, setLoading] = useState(true); // State to indicate if data is loading
 
   const getGroup = async () => {
     try {
@@ -14,6 +15,7 @@ export const GroupList= () => {
       if (success) {
         setGroupList(data?.data);
         //console.log(data?.data);
+        setLoading(false)
       }
     } catch (error) {
       console.log(error.response.data.message);
@@ -32,6 +34,9 @@ export const GroupList= () => {
     // Cleanup function to clear the interval when the component unmounts
     return () => clearInterval(intervalId);
   }, []);
+  if (loading) {
+    return <ActivityIndicator size="large" color="#0000ff" />;
+}
 
   return (
     <View style={styles.container}>

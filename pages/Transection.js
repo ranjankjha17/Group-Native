@@ -1,18 +1,15 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import base64 from 'base64-js';
-import { View, Text, TouchableOpacity, Modal, Button, Image, StyleSheet, Picker, TextInput } from 'react-native';
+import { ActivityIndicator, View, Text, TouchableOpacity, Modal, Button, Image, StyleSheet, Picker, TextInput } from 'react-native';
 import { useSelector } from 'react-redux';
-import { RadioButton } from 'react-native-paper';
-
 
 export const Transection = () => {
-    // const groupName=useSelector(state=>state.group.groupname)
-    // console.log(groupName)
+    const [loading, setLoading] = useState(true); // State to indicate if data is loading
     const [selectedData, setSelectedData] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
     const [regData, setRegData] = useState([])
-    const [value, setValue] = useState('Receipt');
+    const [selectedValue, setSelectedValue] = useState('Receipt');
     const [amountType, setAmountType] = useState('Credit');
     const [selectedMode, setSelectedMode] = useState('Cash');
     const [mobileNumber, setMobileNumber] = useState('');
@@ -35,9 +32,15 @@ export const Transection = () => {
 
     useEffect(() => {
         async function getImageData() {
-            const { data } = await axios.get('https://reactnativeserver.vercel.app/getimage')
-            console.log(data?.data)
-            setRegData(data?.data)
+            try {
+                const { data } = await axios.get('https://reactnativeserver.vercel.app/getimage')
+                console.log(data?.data)
+                setRegData(data?.data)
+                setLoading(false)
+            } catch (error) {
+                console.log(error)
+               // setLoading(false)
+            }
         }
         getImageData()
     }, [])
@@ -57,8 +60,11 @@ export const Transection = () => {
             return null; // Return null for images that couldn't be processed
         }
     }
-    if (!regData) {
-        return (<Text>Loading...</Text>)
+    // if (!regData) {
+    //     return (<Text>Loading...</Text>)
+    // }
+    if (loading) {
+        return <ActivityIndicator size="large" color="#0000ff" />;
     }
 
     // const filterRegData=regData.filter((e)=>e.groupbc===groupName)
@@ -100,23 +106,21 @@ export const Transection = () => {
                                 )} */}
                                 <View>
                                     <Text style={{ fontSize: 18, marginBottom: 10 }}>Select Transaction Type:</Text>
-                                    <RadioButton.Group onValueChange={newValue => setValue(newValue)} value={value}>
-                                        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-                                            <RadioButton.Android value="Receipt" color="#6200EE" />
-                                            <Text style={{ fontSize: 16 }}>Receipt</Text>
-                                        </View>
-                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                            <RadioButton.Android value="Payment" color="#6200EE" />
-                                            <Text style={{ fontSize: 16 }}>Payment</Text>
-                                        </View>
-                                    </RadioButton.Group>
-                                    {/* <Text style={{ marginTop: 20, fontSize: 16 }}>Selected Option: {value}</Text> */}
+                                    <Picker
+                                        selectedValue={selectedValue}
+                                        style={{ height: 40 }}
+                                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                                    >
+                                        <Picker.Item label="Receipt" value="Receipt" />
+                                        <Picker.Item label="Payment" value="Payment" />
+                                    </Picker>
                                 </View>
+
                                 <View>
                                     <Text style={{ fontSize: 18, marginBottom: 10 }}>Select Amount Type:</Text>
                                     <Picker
                                         selectedValue={amountType}
-                                        style={{ height: 50}}
+                                        style={{ height: 40 }}
                                         onValueChange={(itemValue, itemIndex) => setAmountType(itemValue)}
                                     >
                                         <Picker.Item label="Credit" value="Credit" />
@@ -137,7 +141,7 @@ export const Transection = () => {
                                     <Text style={{ fontSize: 18, marginBottom: 10 }}>Select Payment Mode:</Text>
                                     <Picker
                                         selectedValue={selectedMode}
-                                        style={{ height: 50 }}
+                                        style={{ height: 40 }}
                                         onValueChange={(itemValue, itemIndex) => setSelectedMode(itemValue)}
                                     >
                                         <Picker.Item label="Cash" value="Cash" />
@@ -156,7 +160,7 @@ export const Transection = () => {
                                     // keyboardType="numeric"
 
                                     />
-                                    <Button title="Submit" onPress={handleSubmit} />
+                                    <Button title="Save" onPress={handleSubmit} />
                                 </View>
 
                             </View>

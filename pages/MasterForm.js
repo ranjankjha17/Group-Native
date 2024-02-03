@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Text, TouchableOpacity, Alert, Image, Platform, ScrollView } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Text, TouchableOpacity, Alert, Image, Platform, ScrollView, ActivityIndicator } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 import { Picker } from '@react-native-picker/picker';
@@ -9,6 +9,7 @@ import { addGroup } from '../reducers/group';
 
 export const MasterForm = () => {
   const dispatch = useDispatch()
+  const [loading, setLoading] = useState(true); // State to indicate if data is loading
   const [codeNo, setCodeNo] = useState('')
   const [groupList, setGroupList] = useState([])
   const [selectedValue, setSelectedValue] = useState('');
@@ -35,9 +36,14 @@ export const MasterForm = () => {
     })();
 
     const fetchCode = async () => {
+      try{
       const { data } = await axios.get(`${URL}/get-code`)
       console.log(data?.data)
       setCodeNo(data?.data)
+      setLoading(false)
+      }catch(error){
+        console.log(error)
+      }
     }
 
     fetchCode()
@@ -176,8 +182,9 @@ export const MasterForm = () => {
     }
   };
 
-
-
+  if (loading) {
+    return <ActivityIndicator size="large" color="#0000ff" />;
+}
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -250,9 +257,9 @@ export const MasterForm = () => {
         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        {/* <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Update</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
     </ScrollView>

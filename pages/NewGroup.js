@@ -70,9 +70,9 @@ export const NewGroup = () => {
                 <TouchableOpacity style={styles.button} onPress={handleSubmit}>
                     <Text style={styles.buttonText}>Save</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} >
+                {/* <TouchableOpacity style={styles.button} >
                     <Text style={styles.buttonText}>Exit</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
 
         </View>
@@ -81,9 +81,9 @@ export const NewGroup = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        // flex: 1,
+        // justifyContent: 'center',
+        // alignItems: 'center',
         padding: 16,
         borderColor: "red"
     },
@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         color: '#0c3761',
         fontWeight: '500',
+        textAlign:"center"
     },
 
     input: {

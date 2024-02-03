@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, TextInput, Text, StyleSheet, TouchableOpacity, Platform, Alert } from 'react-native'
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, Platform, Alert, ActivityIndicator } from 'react-native'
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSelector } from 'react-redux';
 
 export const Form2 = () => {
+    const [loading, setLoading] = useState(true); // State to indicate if data is loading
     const [selectedName, setSelectedName] = useState('');
     const [regData, setRegData] = useState([])
     //console.log(regData)
@@ -48,9 +49,13 @@ export const Form2 = () => {
 
     useEffect(() => {
         const getGroup = async () => {
+            try{
             const { data } = await axios.get(`${URL}/get-group`)
             setGroupList(data.data)
-
+            setLoading(false)
+            }catch(error){
+                console.log(error)
+            }
         }
         getGroup()
     }, [])
@@ -183,7 +188,10 @@ export const Form2 = () => {
     //     const username=getName()
     //     console.log(username)
     // }, [])
-
+    if (loading) {
+        return <ActivityIndicator size="large" color="#0000ff" />;
+    }
+    
     return (
         <View style={styles.container}>
             <Text style={styles.heading}>New Form</Text>
