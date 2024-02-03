@@ -59,16 +59,17 @@ export default function App() {
 
     <ErrorBoundary FallbackComponent={ErrorHandler}>
       <Provider store={store}>
-        {/* <NavigationContainer>
+        <NavigationContainer>
           <Stack.Navigator initialRouteName="Login">
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Home" component={Dashboard} />
           <Stack.Screen name="Register" component={RegisterScreen} />
           <Stack.Screen name="Group" component={NewGroupScreen} />
           <Stack.Screen name="Auction" component={AuctionScreen} />
+          <Stack.Screen name="Transection" component={Transection} />
           </Stack.Navigator>
-        </NavigationContainer> */}
-        <Transection/>
+        </NavigationContainer>
+        {/* <Transection/> */}
       </Provider>
       </ErrorBoundary>
     // <Form2/>
