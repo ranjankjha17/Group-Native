@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import base64 from 'base64-js';
-import { ActivityIndicator, View, Text, TouchableOpacity, Modal, Button, Image, StyleSheet, Picker, TextInput } from 'react-native';
+import { ActivityIndicator, View, Text, TouchableOpacity, Modal, Button, Image, StyleSheet, TextInput } from 'react-native';
 import { useSelector } from 'react-redux';
+import { Picker } from '@react-native-picker/picker';
 
 export const Transection = () => {
     const [loading, setLoading] = useState(true); // State to indicate if data is loading
@@ -39,7 +40,7 @@ export const Transection = () => {
                 setLoading(false)
             } catch (error) {
                 console.log(error)
-               // setLoading(false)
+                // setLoading(false)
             }
         }
         getImageData()
@@ -60,17 +61,12 @@ export const Transection = () => {
             return null; // Return null for images that couldn't be processed
         }
     }
-    // if (!regData) {
-    //     return (<Text>Loading...</Text>)
-    // }
     if (loading) {
         return <ActivityIndicator size="large" color="#0000ff" />;
     }
 
-    // const filterRegData=regData.filter((e)=>e.groupbc===groupName)
-    // console.log(filterRegData)
     return (
-        <View>
+        <View style={{marginTop:30}}>
             {
                 regData?.map((item, index) => (
                     <TouchableOpacity key={index} onPress={() => handleNameClick(item)}>
@@ -86,87 +82,71 @@ export const Transection = () => {
                 visible={modalVisible}
                 onRequestClose={() => setModalVisible(false)}
             >
-                <View style={{ flex: 1, justifyContent: 'flex-end', margin: 0 }}>
-                    <View style={{ backgroundColor: 'white', padding: 20, borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
-                        {selectedData && (
-                            <View style={styles.container}>
-                                <Text style={styles.text}>Code: {selectedData.code}</Text>
-                                <Text style={styles.text}>Name: {selectedData.name}</Text>
-                                {/* <Text style={styles.text}>Aadhaar Number: {selectedData.rrnumber}</Text>
-                                <Text style={styles.text}>Cast: {selectedData.cast}</Text>
-                                <Text style={styles.text}>Mobile Number: {selectedData.mobileno}</Text>
-                                <Text style={styles.text}>ID: {selectedData.id}</Text>
-                                <Text style={styles.text}>Group: {selectedData.groupbc}</Text> */}
-                                {/* {selectedData?.photo && selectedData?.photo?.data && (
-                                    <Image
-                                        alt='myphoto'
-                                        source={{ uri: getImageURI(selectedData?.photo?.data) }}
-                                        style={styles.image}
-                                    />
-                                )} */}
-                                <View>
-                                    <Text style={{ fontSize: 18, marginBottom: 10 }}>Select Transaction Type:</Text>
-                                    <Picker
-                                        selectedValue={selectedValue}
-                                        style={{ height: 40 }}
-                                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                                    >
-                                        <Picker.Item label="Receipt" value="Receipt" />
-                                        <Picker.Item label="Payment" value="Payment" />
-                                    </Picker>
-                                </View>
+                <View>
+                    <View style={styles.container}>
+                    {selectedData && (
+                        <View style={{flexDirection:"row",justifyContent:"space-between"}}>
+                            <Text style={styles.text}>Code: {selectedData.code}</Text>
+                            <Text style={styles.text}>Name: {selectedData.name}</Text>
+                        </View>
+                    )}
 
-                                <View>
-                                    <Text style={{ fontSize: 18, marginBottom: 10 }}>Select Amount Type:</Text>
-                                    <Picker
-                                        selectedValue={amountType}
-                                        style={{ height: 40 }}
-                                        onValueChange={(itemValue, itemIndex) => setAmountType(itemValue)}
-                                    >
-                                        <Picker.Item label="Credit" value="Credit" />
-                                        <Picker.Item label="Debit" value="Debit" />
-                                    </Picker>
-                                    {/* <Text style={{ marginTop: 20, fontSize: 16 }}>Selected Amount Type: {amountType}</Text> */}
-                                </View>
-                                <View>
-                                    <Text style={{ fontSize: 18, marginBottom: 10 }}>Neat:</Text>
-                                    <TextInput
-                                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 20, padding: 10 }}
-                                        placeholder="Enter text for Neat"
-                                        value={neatText}
-                                        onChangeText={handleNeatTextChange}
-                                    />
-                                </View>
-                                <View>
-                                    <Text style={{ fontSize: 18, marginBottom: 10 }}>Select Payment Mode:</Text>
-                                    <Picker
-                                        selectedValue={selectedMode}
-                                        style={{ height: 40 }}
-                                        onValueChange={(itemValue, itemIndex) => setSelectedMode(itemValue)}
-                                    >
-                                        <Picker.Item label="Cash" value="Cash" />
-                                        <Picker.Item label="UPI" value="UPI" />
-                                    </Picker>
-                                    {/* <Text style={{ marginTop: 20, fontSize: 16 }}>Selected Mode: {selectedMode}</Text> */}
-                                </View>
-                                <View>
-                                    <Text style={{ fontSize: 18, marginBottom: 10 }}>Enter Mobile Number:</Text>
-                                    <TextInput
-                                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingHorizontal: 10 }}
-                                        onChangeText={handleMobileNumberChange}
-                                        value={mobileNumber}
-                                        placeholder="Mobile Number"
-                                        keyboardType="phone-pad"
-                                    // keyboardType="numeric"
+                    <View style={{marginBottom:20}}>
+                        <Text style={{ fontSize: 18, marginBottom: 10 }}>Set Transaction Type:</Text>
+                        <Picker
+                            selectedValue={selectedValue}
+                            style={{ height: 40 }}
+                            onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                        >
+                            <Picker.Item label="Receipt" value="Receipt" />
+                            <Picker.Item label="Payment" value="Payment" />
+                        </Picker>
+                    </View>
 
-                                    />
-                                    <Button title="Save" onPress={handleSubmit} />
-                                </View>
+                    <View style={{marginBottom:20}}>
+                        <Text style={{ fontSize: 18, marginBottom: 10 }}>Select Amount Type:</Text>
+                        <Picker
+                            selectedValue={amountType}
+                            style={{ height: 40 }}
+                            onValueChange={(itemValue, itemIndex) => setAmountType(itemValue)}
+                        >
+                            <Picker.Item label="Credit" value="Credit" />
+                            <Picker.Item label="Debit" value="Debit" />
+                        </Picker>
+                    </View>
+                    <View style={{marginBottom:20}}>
+                        <Text style={{ fontSize: 18, marginBottom: 10 }}>Neat:</Text>
+                        <TextInput
+                            style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 20, padding: 10 }}
+                            placeholder="Enter text for Neat"
+                            value={neatText}
+                            onChangeText={handleNeatTextChange}
+                        />
+                    </View>
+                    <View style={{marginBottom:20}}>
+                        <Text style={{ fontSize: 18, marginBottom: 10 }}>Select Payment Mode:</Text>
+                        <Picker
+                            selectedValue={selectedMode}
+                            style={{ height: 40 }}
+                            onValueChange={(itemValue, itemIndex) => setSelectedMode(itemValue)}
+                        >
+                            <Picker.Item label="Cash" value="Cash" />
+                            <Picker.Item label="UPI" value="UPI" />
+                        </Picker>
+                    </View>
+                    <View style={{marginBottom:20}}>
+                        <Text style={{ fontSize: 18, marginBottom: 10 }}>Enter Mobile Number:</Text>
+                        <TextInput
+                            style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingHorizontal: 10 }}
+                            onChangeText={handleMobileNumberChange}
+                            value={mobileNumber}
+                            placeholder="Mobile Number"
+                            keyboardType="number-pad"
 
-                            </View>
-                        )}
-
-                        <Button title="Close" onPress={() => setModalVisible(false)} />
+                        />
+                        <Button title="Save" onPress={handleSubmit} />
+                    </View>
+                    <Button title="Close" onPress={() => setModalVisible(false)} />
                     </View>
                 </View>
             </Modal>
@@ -177,8 +157,10 @@ export const Transection = () => {
 
 const styles = StyleSheet.create({
     container: {
-        margin: 10,
+        // margin: 10,
+        marginTop:0,
         padding: 10,
+        paddingTop:0,
         backgroundColor: '#f0f0f0',
         borderRadius: 5,
     },
