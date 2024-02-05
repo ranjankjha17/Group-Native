@@ -12,7 +12,7 @@ export const Transection = () => {
     const [selectedData, setSelectedData] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
     const [regData, setRegData] = useState([])
-    const [selectedValue, setSelectedValue] = useState('Receipt');
+    // const [selectedValue, setSelectedValue] = useState('Receipt');
     const [amountType, setAmountType] = useState('Credit');
     const [selectedMode, setSelectedMode] = useState('Cash');
     const [mobileNumber, setMobileNumber] = useState('');
@@ -20,8 +20,8 @@ export const Transection = () => {
     const [selectedOption, setSelectedOption] = useState('Receipt');
     const [formData, setFormData] = useState({})
 
-    const handleNeatTextChange = (text) => {
-        setNeatText(text);
+    const handleAmountTextChange = (text) => {
+        setAmountText(text);
     };
     const handleMobileNumberChange = (text) => {
         setMobileNumber(text);
@@ -32,7 +32,7 @@ export const Transection = () => {
         formData['transectionType'] = selectedOption
         formData['amountType'] = amountType
         formData['paymentMode'] = selectedMode
-        formData['amount'] = neatText
+        formData['amount'] = amountText
         formData['mobilenumber'] = mobileNumber
         // console.log('form data', formData)
 
@@ -44,7 +44,7 @@ export const Transection = () => {
                 setSelectedOption('')
                 setAmountType('')
                 // setSelectedMode('')
-                setNeatText('')
+                setAmountText('')
                 setMobileNumber('')
             }
 
@@ -153,7 +153,7 @@ export const Transection = () => {
                                 style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 20, padding: 10 }}
                                 placeholder="Enter Amount"
                                 value={amountText}
-                                onChangeText={handleNeatTextChange}
+                                onChangeText={handleAmountTextChange}
                                 keyboardType="number-pad"
                             />
                         </View>
