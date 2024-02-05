@@ -13,8 +13,6 @@ import { RegisterScreen } from './pages/RegisterScreen';
 import { NewGroupScreen } from './pages/NewGroupScreen';
 import { AuctionScreen } from './pages/AuctionScreen';
 import { Transection } from './pages/Transection';
-import { Transection2 } from './Test/Transection2';
-import MyPickerModal from './Test/MyPickerModal';
 
 // const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -59,26 +57,21 @@ export default function App() {
     //   </NavigationContainer>
     // </ErrorBoundary>
 
-    // <ErrorBoundary FallbackComponent={ErrorHandler}>
-    //   <Provider store={store}>
-    //     {/* <NavigationContainer>
-    //       <Stack.Navigator initialRouteName="Login">
-    //       <Stack.Screen name="Login" component={Login} />
-    //       <Stack.Screen name="Home" component={Dashboard} />
-    //       <Stack.Screen name="Register" component={RegisterScreen} />
-    //       <Stack.Screen name="Group" component={NewGroupScreen} />
-    //       <Stack.Screen name="Auction" component={AuctionScreen} />
-    //       <Stack.Screen name="Transection" component={Transection} />
-    //       </Stack.Navigator>
-    //     </NavigationContainer> */}
-    //     {/* <Transection2/> */}
-    //     <MyPickerModal/>
-    //   </Provider>
-    //   </ErrorBoundary>
-    // <Form2/>
-    // <MyPickerModal/>
+    <ErrorBoundary FallbackComponent={ErrorHandler}>
+      <Provider store={store}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Home" component={Dashboard} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="Group" component={NewGroupScreen} />
+          <Stack.Screen name="Auction" component={AuctionScreen} />
+          <Stack.Screen name="Transection" component={Transection} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
+      </ErrorBoundary>
     // <Transection2/>
-<Transection/>
   );
 }
 

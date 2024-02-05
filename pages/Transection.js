@@ -66,7 +66,7 @@ export const Transection = () => {
     }
 
     return (
-        <View style={{marginTop:30}}>
+        <View style={{marginTop:20}}>
             {
                 regData?.map((item, index) => (
                     <TouchableOpacity key={index} onPress={() => handleNameClick(item)}>
@@ -85,7 +85,7 @@ export const Transection = () => {
                 <View>
                     <View style={styles.container}>
                     {selectedData && (
-                        <View style={{flexDirection:"row",justifyContent:"space-between"}}>
+                        <View style={{flexDirection:"row",justifyContent:"space-between",marginBottom:10}}>
                             <Text style={styles.text}>Code: {selectedData.code}</Text>
                             <Text style={styles.text}>Name: {selectedData.name}</Text>
                         </View>
@@ -142,7 +142,6 @@ export const Transection = () => {
                             value={mobileNumber}
                             placeholder="Mobile Number"
                             keyboardType="number-pad"
-
                         />
                         <Button title="Save" onPress={handleSubmit} />
                     </View>
@@ -160,7 +159,7 @@ const styles = StyleSheet.create({
         // margin: 10,
         marginTop:0,
         padding: 10,
-        paddingTop:0,
+        paddingTop:10,
         backgroundColor: '#f0f0f0',
         borderRadius: 5,
     },
