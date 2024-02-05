@@ -163,12 +163,7 @@ export const MasterForm = () => {
           alert("Your form is submitted")
         }
       } catch (error) {
-        if (axios.isCancel(error)) {
-          console.log('Request canceled:', error.response.data.message);
-        } else {
-          console.log(error.response.data.message)
-
-        }
+          console.log(error.response.data.message)       
 
       }
 
