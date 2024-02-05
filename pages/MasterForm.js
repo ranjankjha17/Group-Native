@@ -9,7 +9,7 @@ import { addGroup } from '../reducers/group';
 
 export const MasterForm = () => {
   const dispatch = useDispatch()
-  const [loading, setLoading] = useState(true); // State to indicate if data is loading
+  const [loading, setLoading] = useState(true);
   const [codeNo, setCodeNo] = useState('')
   const [groupList, setGroupList] = useState([])
   const [selectedValue, setSelectedValue] = useState('');
@@ -97,7 +97,7 @@ export const MasterForm = () => {
         console.log('Image selection cancelled');
       }
     } catch (error) {
-      console.error('Error selecting photo:', error);
+      console.log('Error selecting photo:', error.response.data.messgae);
     }
   };
 
@@ -164,21 +164,16 @@ export const MasterForm = () => {
         }
       } catch (error) {
         if (axios.isCancel(error)) {
-          console.log('Request canceled:', error.message);
+          console.log('Request canceled:', error.response.data.message);
         } else {
-          console.error('Error submitting form1:', error);
-          console.error('Full error object:', error);
-
-          // You can also log specific properties of the error object
-          console.error('Error response data:', error.response?.data);
-          console.error('Error status:', error.response?.status);
+          console.log(error.response.data.message)
 
         }
 
       }
 
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.log(error.response.data.message)
     }
   };
 

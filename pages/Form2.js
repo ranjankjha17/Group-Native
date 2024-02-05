@@ -138,7 +138,7 @@ export const Form2 = () => {
                 alert("Your data is saved")
             }
         } catch (error) {
-            console.error('Error:', error.message);
+            console.log('Error:', error.response.data.message);
         }
     }
 

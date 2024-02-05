@@ -50,6 +50,12 @@ export const Dashboard = () => {
     // setShowRegisterForm(false);
     navigation.navigate('Transection')
   };
+  const handleReportButtonClick = () => {
+    // setShowForm(true)
+    // setShowGroupForm(false);
+    // setShowRegisterForm(false);
+    navigation.navigate('Report')
+  };
 
   return (
     <ScrollView style={{ backgroundColor: "#fff" }}>
@@ -68,7 +74,7 @@ export const Dashboard = () => {
         <TouchableOpacity style={DashboardStyles.button} onPress={handleTransectionButtonClick} >
           <Text style={DashboardStyles.buttonText}>Transection</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={DashboardStyles.button} onPress={""} >
+        <TouchableOpacity style={DashboardStyles.button} onPress={handleReportButtonClick} >
           <Text style={DashboardStyles.buttonText}>Report</Text>
         </TouchableOpacity>
 

@@ -30,7 +30,7 @@ export const RegisterList = () => {
             const dataURI = `data:image/jpg;base64,${base64Image}`;
             return dataURI
         } catch (error) {
-            console.error('Error converting image data to base64', error);
+            console.log('Error converting image data to base64', error.response.data.message);
             return null; // Return null for images that couldn't be processed
         }
     }
