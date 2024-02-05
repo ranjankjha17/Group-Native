@@ -25,35 +25,20 @@ export const Dashboard = () => {
   useEffect(() => {
   }, [username])
   const handleRegisterButtonClick = () => {
-    // setShowRegisterForm(true);
-    // setShowGroupForm(false);
-    // setShowForm(false)
     navigation.navigate('Register')
   };
 
   const handleGroupFormButtonClick = () => {
-    // setShowGroupForm(true);
-    // setShowRegisterForm(false);
-    // setShowForm(false)
     navigation.navigate('Group')
 
   };
   const handleFormButtonClick = () => {
-    // setShowForm(true)
-    // setShowGroupForm(false);
-    // setShowRegisterForm(false);
     navigation.navigate('Auction')
   };
   const handleTransectionButtonClick = () => {
-    // setShowForm(true)
-    // setShowGroupForm(false);
-    // setShowRegisterForm(false);
     navigation.navigate('Transection')
   };
   const handleReportButtonClick = () => {
-    // setShowForm(true)
-    // setShowGroupForm(false);
-    // setShowRegisterForm(false);
     navigation.navigate('Report')
   };
 
@@ -79,17 +64,6 @@ export const Dashboard = () => {
         </TouchableOpacity>
 
       </View>
-      {/* {showRegisterForm &&
-        <>
-          <MasterForm />
-          <RegisterList />
-        </>}
-      {showGroupForm &&
-        <>
-          <NewGroup />
-          <GroupList />
-        </>}
-      {showForm && <Form2 />} */}
     </ScrollView>
   )
 }
@@ -102,9 +76,6 @@ const DashboardStyles = StyleSheet.create({
   buttonContainer: {
     marginTop: 10,
     flexDirection: 'column',
-    // justifyContent: 'space-between',
-    // alignItems: 'center',
-    // paddingLeft: 10,
     width: '100%',
   },
   button: {
@@ -112,7 +83,6 @@ const DashboardStyles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     flex: 1,
-    // marginLeft: 5,
     marginTop:5
   },
   buttonText: {
