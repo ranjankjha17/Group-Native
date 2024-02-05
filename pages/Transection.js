@@ -97,7 +97,6 @@ export const Transection = () => {
                         </View>
                     </TouchableOpacity>
                 ))}
-
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -137,7 +136,6 @@ export const Transection = () => {
                                 </View>
                             </RadioButton.Group>
                         </View>
-
                         <View style={{ marginBottom: 20 }}>
                             <Text style={{ fontSize: 18, marginBottom: 10 }}>Select Amount Type:</Text>
                             <Picker
@@ -184,14 +182,12 @@ export const Transection = () => {
                                     <Text style={styles.buttonText}>Save</Text>
                                 </TouchableOpacity>
                             </View>
-
                         </View>
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity style={styles.button} onPress={() => setModalVisible(false)}>
                                 <Text style={styles.buttonText}>Close</Text>
                             </TouchableOpacity>
                         </View>
-
                     </View>
                 </View>
             </Modal>
