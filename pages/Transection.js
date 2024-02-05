@@ -13,7 +13,7 @@ export const Transection = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [regData, setRegData] = useState([])
     // const [selectedValue, setSelectedValue] = useState('Receipt');
-    const [amountType, setAmountType] = useState('Credit');
+    // const [amountType, setAmountType] = useState('Credit');
     const [selectedMode, setSelectedMode] = useState('Cash');
     const [mobileNumber, setMobileNumber] = useState('');
     const [amountText, setAmountText] = useState('');
@@ -30,7 +30,7 @@ export const Transection = () => {
         formData['code'] = selectedData.code
         formData['name'] = selectedData.name
         formData['transectionType'] = selectedOption
-        formData['amountType'] = amountType
+        // formData['amountType'] = amountType
         formData['paymentMode'] = selectedMode
         formData['amount'] = amountText
         formData['mobilenumber'] = mobileNumber
@@ -42,7 +42,7 @@ export const Transection = () => {
             if (success) {
                 alert('Your data is saved')
                 setSelectedOption('')
-                setAmountType('')
+                // setAmountType('')
                 // setSelectedMode('')
                 setAmountText('')
                 setMobileNumber('')
@@ -112,17 +112,6 @@ export const Transection = () => {
                             </View>
                         )}
 
-                        {/* <View style={{marginBottom:20}}>
-                        <Text style={{ fontSize: 18, marginBottom: 10 }}>Set Transaction Type:</Text>
-                        <Picker
-                            selectedValue={selectedValue}
-                            style={{ height: 40 }}
-                            onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                        >
-                            <Picker.Item label="Receipt" value="Receipt" />
-                            <Picker.Item label="Payment" value="Payment" />
-                        </Picker>
-                    </View> */}
                         <View style={{ marginBottom: 20 }}>
                             <Text style={{ fontSize: 18, marginBottom: 10 }}>Select Transaction Type:</Text>
                             <RadioButton.Group onValueChange={newValue => setSelectedOption(newValue)} value={selectedOption}>
@@ -136,7 +125,7 @@ export const Transection = () => {
                                 </View>
                             </RadioButton.Group>
                         </View>
-                        <View style={{ marginBottom: 20 }}>
+                        {/* <View style={{ marginBottom: 20 }}>
                             <Text style={{ fontSize: 18, marginBottom: 10 }}>Select Amount Type:</Text>
                             <Picker
                                 selectedValue={amountType}
@@ -146,7 +135,7 @@ export const Transection = () => {
                                 <Picker.Item label="Credit" value="Credit" />
                                 <Picker.Item label="Debit" value="Debit" />
                             </Picker>
-                        </View>
+                        </View> */}
                         <View style={{ marginBottom: 20 }}>
                             <Text style={{ fontSize: 18, marginBottom: 10 }}>Amount:</Text>
                             <TextInput
