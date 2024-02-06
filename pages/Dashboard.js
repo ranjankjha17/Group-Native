@@ -45,24 +45,37 @@ export const Dashboard = () => {
   return (
     <ScrollView style={{ backgroundColor: "#fff" }}>
       <Logout />
-      <Logo/>
-      <View style={DashboardStyles.buttonContainer}>
-        <TouchableOpacity style={DashboardStyles.button} onPress={handleRegisterButtonClick}>
-          <Text style={DashboardStyles.buttonText}>Register</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={DashboardStyles.button} onPress={handleGroupFormButtonClick} >
-          <Text style={DashboardStyles.buttonText}>New Group</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={DashboardStyles.button} onPress={handleFormButtonClick} >
-          <Text style={DashboardStyles.buttonText}>Auction</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={DashboardStyles.button} onPress={handleTransectionButtonClick} >
-          <Text style={DashboardStyles.buttonText}>Transection</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={DashboardStyles.button} onPress={handleReportButtonClick} >
-          <Text style={DashboardStyles.buttonText}>Report</Text>
-        </TouchableOpacity>
+      <Logo />
 
+
+      <View style={DashboardStyles.buttonContainer}>
+        {
+          username === "admin" ? (
+            <>
+              <TouchableOpacity style={DashboardStyles.button} onPress={handleRegisterButtonClick}>
+                <Text style={DashboardStyles.buttonText}>Register</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={DashboardStyles.button} onPress={handleGroupFormButtonClick} >
+                <Text style={DashboardStyles.buttonText}>New Group</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={DashboardStyles.button} onPress={handleFormButtonClick} >
+                <Text style={DashboardStyles.buttonText}>Auction</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={DashboardStyles.button} onPress={handleTransectionButtonClick} >
+                <Text style={DashboardStyles.buttonText}>Transection</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={DashboardStyles.button} onPress={handleReportButtonClick} >
+                <Text style={DashboardStyles.buttonText}>Report</Text>
+              </TouchableOpacity>
+            </>
+          ) : (
+            <View style={{ marginTop: 100 }}>
+              <TouchableOpacity style={DashboardStyles.button} onPress={handleTransectionButtonClick} >
+                <Text style={DashboardStyles.buttonText}>Transection</Text>
+              </TouchableOpacity>
+            </View>
+
+          )}
       </View>
     </ScrollView>
   )
@@ -71,19 +84,23 @@ const DashboardStyles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
+
   },
 
   buttonContainer: {
     marginTop: 10,
     flexDirection: 'column',
     width: '100%',
+    paddingLeft: 10,
+    paddingRight: 10,
+
   },
   button: {
     backgroundColor: 'purple',
     padding: 10,
     borderRadius: 5,
     flex: 1,
-    marginTop:5
+    marginTop: 5
   },
   buttonText: {
     color: 'white',
