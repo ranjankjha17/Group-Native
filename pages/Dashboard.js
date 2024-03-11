@@ -2,21 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-import { MasterForm } from './MasterForm';
 import { Logout } from '../components/Logout';
-import { GetRegister } from '../components/GetRegister';
-import { NameList } from '../Test/NameList';
-import { RegisterList } from '../components/RegisterList';
-import { TestGetimage } from '../components/TestGetimage';
-import { Form2 } from './Form2';
-import { NewGroup } from './NewGroup'
-import { GroupList } from './GroupList';
-import { GroupList2 } from './GroupList2';
 import Logo from '../components/Logo';
 export const Dashboard = () => {
-  const [showRegisterForm, setShowRegisterForm] = useState(false);
-  const [showGroupForm, setShowGroupForm] = useState(false);
-  const [showForm, setShowForm] = useState(false);
+  // const [showRegisterForm, setShowRegisterForm] = useState(false);
+  // const [showGroupForm, setShowGroupForm] = useState(false);
+  // const [showForm, setShowForm] = useState(false);
 
   const navigation = useNavigation();
   const dispatch = useDispatch()

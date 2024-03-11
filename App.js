@@ -1,14 +1,11 @@
 import { StyleSheet } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack'; 
-import { MaterialIcons } from '@expo/vector-icons';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import { Dashboard } from './pages/Dashboard';
 import { Login } from './pages/Login';
-import { Form2 } from './pages/Form2';
 import { RegisterScreen } from './pages/RegisterScreen';
 import { NewGroupScreen } from './pages/NewGroupScreen';
 import { AuctionScreen } from './pages/AuctionScreen';
