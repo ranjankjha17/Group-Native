@@ -5,19 +5,35 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: {
     isLoggedIn: false,
-    username: null,
+    user: {
+      username: '',
+      permission: '',
+      company: '',
+    },
+  
+    //username: null,
     error: null,
   },
   reducers: {
     login: (state, action) => {
       state.isLoggedIn = true;
-      state.username = action.payload;
+      //state.username = action.payload;
+      state.user.username = action.payload.username;
+      state.user.permission = action.payload.permission;
+      state.user.company = action.payload.company;
+
       state.error = null;
-      AsyncStorage.setItem('auth', JSON.stringify(state.username));
+      AsyncStorage.setItem('auth', JSON.stringify(state.user.username));
     },
     logout: (state) => {
       state.isLoggedIn = false;
-      state.username = null;
+     // state.username = null;
+     state.user = {
+      username: '',
+      permission: '',
+      company: '',
+    };
+
       state.error = null;
     },
     loginFailure: (state, action) => {   

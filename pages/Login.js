@@ -37,11 +37,11 @@ export const Login = () => {
                 const headers = {
                     Accept: 'application/json',
                 };
-                const response = await axios.post('https://skybillserver.vercel.app/login', formData, { headers });
+                const response = await axios.post('https://reactnativeserver.vercel.app/login', formData, { headers });
                 const { data } = response;
-                const { success, message, token, username } = data;
+                const { success, message, token, username,permission,company } = data;
                 if (success) {
-                    dispatch(login(username))
+                    dispatch(login({ username, permission, company }));
                     setFormData({
                         username: '',
                         password: '',

@@ -11,8 +11,9 @@ export const Dashboard = () => {
 
   const navigation = useNavigation();
   const dispatch = useDispatch()
-  const username = useSelector(state => state.auth.username)
-
+  const user = useSelector(state => state.auth.user)
+  const username = useSelector(state => state.auth.user.username)
+//console.log(user)
   useEffect(() => {
   }, [username])
   const handleRegisterButtonClick = () => {
@@ -41,7 +42,7 @@ export const Dashboard = () => {
 
       <View style={DashboardStyles.buttonContainer}>
         {
-          username === "admin" ? (
+          username === "pintu" ? (
             <>
               <TouchableOpacity style={DashboardStyles.button} onPress={handleRegisterButtonClick}>
                 <Text style={DashboardStyles.buttonText}>Register</Text>
