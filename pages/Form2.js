@@ -20,8 +20,9 @@ export const Form2 = () => {
     const [bcamount, setBcamount] = useState('');
     const [amount, setAmount] = useState('')
     const [bcPayment, setBCPayment] = useState('')
-    const username = useSelector(state => state.auth.username)
+    const username = useSelector(state => state.auth.user.username)
     console.log(username)
+    const companyName = useSelector(state => state.auth.user.company)
     const [intNo,setIntNo]=useState('')
     // useEffect(() => {
     // }, [username])
@@ -35,7 +36,8 @@ export const Form2 = () => {
         intNo: '',
         percentage: '',
         amount: '',
-        c_code:''
+        c_code:'',
+        company:companyName
     });
     useEffect(() => {
         const getintno = async () => {
@@ -59,6 +61,7 @@ export const Form2 = () => {
         }
         getGroup()
     }, [])
+    const filterGroupList=groupList.filter(e=>e.company===companyName)
     useEffect(() => {
         async function getRegData() {
             const { data } = await axios.get('https://reactnativeserver.vercel.app/getimage')
@@ -227,7 +230,7 @@ export const Form2 = () => {
                     }}
                 >
                     <Picker.Item label="Select Group" value="" />
-                    {groupList?.map((element) => (
+                    {filterGroupList?.map((element) => (
                         <Picker.Item
                             key={element.group_id}
                             label={element.groupName}

@@ -19,6 +19,7 @@ export const Transection = () => {
     const [amountText, setAmountText] = useState('');
     const [selectedOption, setSelectedOption] = useState('Receipt');
     const [formData, setFormData] = useState({})
+    const companyName = useSelector(state => state.auth.user.company)
 
     const handleAmountTextChange = (text) => {
         setAmountText(text);
@@ -34,6 +35,7 @@ export const Transection = () => {
         formData['paymentMode'] = selectedMode
         formData['amount'] = amountText
         formData['mobilenumber'] = mobileNumber
+        formData['company']=companyName
         // console.log('form data', formData)
 
         try {

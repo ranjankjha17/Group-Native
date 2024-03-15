@@ -37,9 +37,9 @@ export const MasterForm = () => {
       }
     })();
 
-    const fetchCode = async () => {
+    const fetchCode = async (companyName) => {
       try{
-      const { data } = await axios.get(`${URL}/get-code`)
+      const { data } = await axios.get(`${URL}/get-code?company=${companyName}`)
       console.log(data?.data)
       setCodeNo(data?.data)
       setLoading(false)
@@ -48,7 +48,7 @@ export const MasterForm = () => {
       }
     }
 
-    fetchCode()
+    fetchCode(companyName)
 
   }, [codeNo]);
 
@@ -178,6 +178,9 @@ export const MasterForm = () => {
     return <ActivityIndicator size="large" color="#0000ff" />;
 }
 
+const filterGroupList=groupList.filter(e=>e.company===companyName)
+//console.log(filterGroupList)
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.heading}>Registration</Text>
@@ -197,7 +200,7 @@ export const MasterForm = () => {
           }}
         >
           <Picker.Item label="Select Group" value="" />
-          {groupList?.map((element) => (
+          {filterGroupList?.map((element) => (
             <Picker.Item
               key={element.group_id}
               label={element.groupName}
