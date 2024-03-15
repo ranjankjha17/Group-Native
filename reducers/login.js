@@ -10,7 +10,6 @@ const authSlice = createSlice({
       permission: '',
       company: '',
     },
-  
     //username: null,
     error: null,
   },

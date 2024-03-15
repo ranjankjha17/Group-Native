@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addGroup } from '../reducers/group';
 
 export const MasterForm = () => {
+  const companyName = useSelector(state => state.auth.user.company)
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(true);
   const [codeNo, setCodeNo] = useState('')
@@ -22,6 +23,7 @@ export const MasterForm = () => {
     mobileno: '',
     id: '',
     photo: null,
+    company:companyName
 
   });
 

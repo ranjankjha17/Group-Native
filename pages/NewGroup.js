@@ -6,11 +6,14 @@ import { useSelector } from 'react-redux';
 
 export const NewGroup = () => {
     const groupLength=useSelector((state)=>state.group.groupLength)
+    const companyName = useSelector(state => state.auth.user.company)
+
    // console.log(groupLength)
     const [formData, setFormData] = useState({
         groupName: '',
         amount: '',
         members: '',
+        company:companyName
     });
     const handleChange = (field, value) => {
         setFormData({

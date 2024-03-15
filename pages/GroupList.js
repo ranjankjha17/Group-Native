@@ -2,10 +2,12 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 import { URL } from '../services/services';
+import { useSelector } from 'react-redux';
 
 export const GroupList= () => {
   const [groupList, setGroupList] = useState([]);
   const [loading, setLoading] = useState(true); // State to indicate if data is loading
+  const companyName = useSelector(state => state.auth.user.company)
 
   const getGroup = async () => {
     try {
@@ -14,7 +16,7 @@ export const GroupList= () => {
       const { success } = data;
       if (success) {
         setGroupList(data?.data);
-        //console.log(data?.data);
+       // console.log(data?.data);
         setLoading(false)
       }
     } catch (error) {
@@ -38,6 +40,8 @@ export const GroupList= () => {
     return <ActivityIndicator size="large" color="#0000ff" />;
 }
 
+const filterGroupList=groupList.filter((e)=>e.company===companyName)
+//console.log("filterList",filterGroupList)
   return (
     <View style={styles.container}>
       <View style={styles.headerRow}>
@@ -46,8 +50,8 @@ export const GroupList= () => {
         <Text style={styles.headerText}>Amount</Text>
       </View>
 
-      {groupList &&
-        groupList?.map((item) => (
+      {filterGroupList &&
+        filterGroupList?.map((item) => (
           <View key={item.group_id} style={styles.dataRow}>
             <Text style={styles.dataText}>{item.groupName}</Text>
             <Text style={styles.dataText}>{item.members}</Text>
