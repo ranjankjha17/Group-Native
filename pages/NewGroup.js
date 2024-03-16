@@ -13,7 +13,7 @@ export const NewGroup = () => {
         groupName: '',
         amount: '',
         members: '',
-        company:companyName
+       // company:companyName
     });
     const handleChange = (field, value) => {
         setFormData({
@@ -26,7 +26,9 @@ export const NewGroup = () => {
     // },[groupLength])
 
     const handleSubmit = async () => {
+        formData['company']=companyName
         console.log(formData)
+
         const headers = {
             Accept: 'application/json',
             'Content-Type': 'multipart/form-data'
@@ -43,7 +45,7 @@ export const NewGroup = () => {
                 alert("New Group Created")
             }
         } catch (error) {
-            console.error('Error:', error.message);
+            console.log('Error:', error.response.data.message);
 
         }
     }

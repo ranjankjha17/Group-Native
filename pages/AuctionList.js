@@ -53,7 +53,7 @@ export const AuctionList = () => {
                     <Text style={styles.headerText}>Name</Text>
                     <Text style={styles.headerText}>Amount</Text>
                     <Text style={styles.headerText}>BCPayment</Text>
-                    {/* <Text style={styles.headerText}>IntNo</Text> */}
+                    <Text style={styles.headerText}>IntNo</Text>
                 </View>
 
                 {
@@ -64,7 +64,7 @@ export const AuctionList = () => {
                             <Text style={styles.dataText}>{item.name}</Text>
                             <Text style={styles.dataText}>{item.amount}</Text>
                             <Text style={styles.dataText}>{item.bc_payment}</Text>
-                            {/* <Text style={styles.dataText}>{item.intNo}</Text> */}
+                            <Text style={styles.dataText}>{item.intNo}</Text>
                         </View>
                     ))}
             </View>
@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
     headerText: {
         fontSize: 16,
         fontWeight: 'bold',
+        flex:1
     },
     dataRow: {
         flexDirection: 'row',
@@ -92,5 +93,6 @@ const styles = StyleSheet.create({
     },
     dataText: {
         fontSize: 16,
+        flex:1
     },
 });

@@ -23,7 +23,7 @@ export const MasterForm = () => {
     mobileno: '',
     id: '',
     photo: null,
-    company:companyName
+    //company:companyName
 
   });
 
@@ -106,6 +106,7 @@ export const MasterForm = () => {
   const handleSubmit = async () => {
 
     formData["code"] = codeNo
+    formData["company"]=companyName
     try {
       const formDataToSend = new FormData();
 

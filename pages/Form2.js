@@ -39,7 +39,7 @@ export const Form2 = () => {
         percentage: '',
         amount: '',
         c_code: '',
-        company: companyName
+        //company: companyName
     });
     // console.log(formData.group)
 
@@ -122,9 +122,10 @@ export const Form2 = () => {
         formData["bcAmount"] = bcamount.toString()
         formData['amount'] = amount.toString()
         formData['bc_payment'] = bcPayment.toString()
-        formData['gsum'] = totalSlno,
-            formData['intNo'] = intNo
+        formData['gsum'] = totalSlno
+        formData['intNo'] = intNo
         formData['user'] = username
+        formData["company"]=companyName
         const headers = {
             Accept: 'application/json',
             'Content-Type': 'multipart/form-data'
