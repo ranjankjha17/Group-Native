@@ -68,6 +68,7 @@ export default function App() {
           <Stack.Screen name="Report" component={Report} />
           </Stack.Navigator>
         </NavigationContainer>
+        {/* <AuctionScreen/> */}
       </Provider>
       </ErrorBoundary>
     // <Transection2/>

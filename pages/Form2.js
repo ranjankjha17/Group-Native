@@ -5,15 +5,17 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 import { URL } from '../services/services';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { addGroup } from '../reducers/group';
 
 export const Form2 = () => {
+    const dispatch = useDispatch()
     const [loading, setLoading] = useState(true); // State to indicate if data is loading
     const [selectedName, setSelectedName] = useState('');
     const [regData, setRegData] = useState([])
     //console.log(regData)
     const [selectedValue, setSelectedValue] = useState('');
-   // console.log(selectedValue)
+    // console.log(selectedValue)
     const [date, setDate] = useState(new Date());
     const [showPicker, setShowPicker] = useState(false);
     const [groupList, setGroupList] = useState([])
@@ -21,12 +23,12 @@ export const Form2 = () => {
     const [amount, setAmount] = useState('')
     const [bcPayment, setBCPayment] = useState('')
     const username = useSelector(state => state.auth.user.username)
-    console.log(username)
+   // console.log(username)
     const companyName = useSelector(state => state.auth.user.company)
-    const [intNo,setIntNo]=useState('')
+    const [intNo, setIntNo] = useState('')
     // useEffect(() => {
     // }, [username])
-  
+
     //console.log(bcPayment)
     const [formData, setFormData] = useState({
         date: '',
@@ -36,14 +38,16 @@ export const Form2 = () => {
         intNo: '',
         percentage: '',
         amount: '',
-        c_code:'',
-        company:companyName
+        c_code: '',
+        company: companyName
     });
+    // console.log(formData.group)
+
     useEffect(() => {
         const getintno = async () => {
             const { data } = await axios.get(`${URL}/get-intno`)
             setIntNo(data.data)
-            console.log(data.data)
+           // console.log(data.data)
 
         }
         getintno()
@@ -51,17 +55,19 @@ export const Form2 = () => {
 
     useEffect(() => {
         const getGroup = async () => {
-            try{
-            const { data } = await axios.get(`${URL}/get-group`)
-            setGroupList(data.data)
-            setLoading(false)
-            }catch(error){
+            try {
+                const { data } = await axios.get(`${URL}/get-group`)
+                setGroupList(data.data)
+                setLoading(false)
+            } catch (error) {
                 console.log(error)
             }
         }
         getGroup()
+
     }, [])
-    const filterGroupList=groupList.filter(e=>e.company===companyName)
+    const filterGroupList = groupList.filter(e => e.company === companyName)
+
     useEffect(() => {
         async function getRegData() {
             const { data } = await axios.get('https://reactnativeserver.vercel.app/getimage')
@@ -69,9 +75,14 @@ export const Form2 = () => {
             setRegData(data?.data)
         }
         getRegData()
+            //console.log(formData.group)
+    dispatch(addGroup(formData.group))
+
     }, [formData.group])
     const filterRegData = regData.filter((e) => e.groupbc === formData.group)
-    console.log(filterRegData)
+    //console.log(filterRegData)
+    // console.log(filterRegData.groupbc)
+
     // const handleNameSelection = (name) => {
     //     setSelectedName(name);
     //     handleChange('name', name);
@@ -81,15 +92,15 @@ export const Form2 = () => {
     const handleNameSelection = (name) => {
         setSelectedName(name);
         handleChange('name', name);
-            const selectedItem = filterRegData.find(item => item.name === name);
-            if (selectedItem) {
+        const selectedItem = filterRegData.find(item => item.name === name);
+        if (selectedItem) {
             setFormData(prevState => ({
                 ...prevState,
                 c_code: selectedItem.code
             }));
         }
     };
-    
+
     const handleChange = (field, value) => {
         setFormData({
             ...formData,
@@ -112,8 +123,8 @@ export const Form2 = () => {
         formData['amount'] = amount.toString()
         formData['bc_payment'] = bcPayment.toString()
         formData['gsum'] = totalSlno,
-        formData['intNo']=intNo
-        formData['user']=username
+            formData['intNo'] = intNo
+        formData['user'] = username
         const headers = {
             Accept: 'application/json',
             'Content-Type': 'multipart/form-data'
@@ -131,13 +142,13 @@ export const Form2 = () => {
                     intNo: '',
                     percentage: '',
                     amount: '',
-                    
+
                 })
                 setSelectedValue('')
                 setBcamount('')
                 setBCPayment('')
-                setAmount('')          
-                setIntNo('')      
+                setAmount('')
+                setIntNo('')
                 alert("Your data is saved")
             }
         } catch (error) {
@@ -148,31 +159,31 @@ export const Form2 = () => {
     useEffect(() => {
         // console.log((bcamount * formData.percentage) / 100)
         if (formData.percentage) {
-            if(parseFloat(formData.percentage)<99){
+            if (parseFloat(formData.percentage) < 99) {
                 // setAmount((parseFloat(bcamount) * parseFloat(formData.percentage)) / 100) / filterRegData.length
                 setAmount((parseFloat(bcamount) * parseFloat(formData.percentage)) / (100 * filterRegData.length));
 
             }
-            else{
+            else {
                 setAmount(parseFloat(formData.percentage) / filterRegData.length)
             }
         }
-       
+
 
     }, [formData.percentage, amount])
 
     useEffect(() => {
         if (formData.percentage) {
-            if(parseFloat(formData.percentage)<99){
+            if (parseFloat(formData.percentage) < 99) {
                 setBCPayment(bcamount - ((parseFloat(bcamount) * parseFloat(formData.percentage)) / 100));
                 // setBCPayment(parseFloat(bcamount) - (parseFloat(bcamount) * parseFloat(formData.percentage) / 100));
 
             }
-            else{
+            else {
                 setBCPayment(parseFloat(bcamount) - parseFloat(formData.percentage))
             }
         }
-    }, [formData.percentage, bcamount,amount]);
+    }, [formData.percentage, bcamount, amount]);
 
     const totalSlno = filterRegData.reduce((total, currentItem) => {
         if (currentItem.slno && typeof currentItem.slno === 'number') {
@@ -194,7 +205,7 @@ export const Form2 = () => {
     if (loading) {
         return <ActivityIndicator size="large" color="#0000ff" />;
     }
-    
+
     return (
         <View style={styles.container}>
             <Text style={styles.heading}>New Form</Text>
@@ -270,7 +281,7 @@ export const Form2 = () => {
             <TextInput
                 style={styles.input}
                 placeholder="Int No"
-               // onChangeText={(text) => handleChange('intNo', text)}
+                // onChangeText={(text) => handleChange('intNo', text)}
                 value={`INT No  ${intNo}`}
                 editable={false}
             />
@@ -278,14 +289,14 @@ export const Form2 = () => {
                 style={styles.input}
                 placeholder="%"
                 onChangeText={(text) => handleChange('percentage', text)}
-                value={formData.percentage}
+                value={formData.percentage.toString()}
             />
 
             <TextInput
                 style={styles.input}
                 placeholder="Amount"
                 // onChangeText={(text) => handleChange('amount', text)}
-                value={amount}
+                value={amount.toString()}
                 editable={false}
 
             />

@@ -89,10 +89,12 @@ export const Transection = () => {
         return <ActivityIndicator size="large" color="#0000ff" />;
     }
 
+    const filterRegData=regData.filter(e=>e.company===companyName)
+    //console.log("length",filterRegData)
     return (
         <View style={{ marginTop: 20 }}>
             {
-                regData?.map((item, index) => (
+                filterRegData?.map((item, index) => (
                     <TouchableOpacity key={index} onPress={() => handleNameClick(item)}>
                         <View style={{ padding: 10, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
                             <Text>{item.name}</Text>
