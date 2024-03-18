@@ -133,15 +133,6 @@ export const MasterForm = () => {
       };
       console.log("jj", formData)
       try {
-
-        // const response = await axios.post('https://reactnativeserver.vercel.app/upload', formDataToSend, { headers});
-        //  const response=await axios({
-        //   method: 'POST',
-        //   url: `http://172.24.0.168:5000/upload`,
-        //   data: formDataToSend,
-        //   headers:headers
-        // })
-
         const response = await axios.post(`${URL}/upload`, formDataToSend, {
           headers,
         });
