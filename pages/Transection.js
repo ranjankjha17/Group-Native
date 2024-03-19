@@ -36,7 +36,8 @@ export const Transection = () => {
         formData['amount'] = amountText
         formData['mobilenumber'] = mobileNumber
         formData['company']=companyName
-        // console.log('form data', formData)
+       formData['group_'] = selectedData?.groupbc || '';
+        //console.log('group', selectedData)
 
         try {
             const { data } = await axios.post(`${URL}/transection`, formData)
