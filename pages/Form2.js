@@ -126,6 +126,7 @@ export const Form2 = () => {
         formData['intNo'] = intNo
         formData['user'] = username
         formData["company"]=companyName
+        formData["date"]=date ? date: new Date().toDateString()
         const headers = {
             Accept: 'application/json',
             'Content-Type': 'multipart/form-data'
