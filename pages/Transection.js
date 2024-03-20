@@ -148,11 +148,11 @@ export const Transection = () => {
                     value={searchName}
                 />
             </View>
-            <View style={styles.headerRow}>
+            {/* <View style={styles.headerRow}>
                 <Text style={styles.headerText}>C_Code</Text>
                 <Text style={[styles.headerText, { flex: 2 }]}>C_Name</Text>
                 <Text style={styles.headerText}>C_Amount</Text>
-            </View>
+            </View> */}
             {
                 (searchResults.length > 0 ? searchResults : filterRegData)
                     ?.map((item, index) => (
