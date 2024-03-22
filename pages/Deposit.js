@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useSelector } from 'react-redux'
+import * as Print from 'expo-print';
 
 const Deposit = () => {
     const user = useSelector(state => state.auth.user.username)
@@ -50,15 +51,42 @@ const Deposit = () => {
     console.log(UPIAmount)
 
     const cashList = transectionList.filter(e => e.mode === 'Cash')
-    const cashAmount = cashList.reduce((sum, transaction) => sum + transaction.credit_amount, 0);
+    const cash_credit_amount = cashList.reduce((sum, transaction) => sum + transaction.credit_amount, 0);
+    //const cashList = transectionList.filter(e => e.mode === 'Cash')
+    const cash_debit_amount = cashList.reduce((sum, transaction) => sum + transaction.debit_amount, 0);
+    const cashAmount = cash_credit_amount - cash_debit_amount
     console.log(cashAmount)
 
     const handleSubmit = () => {
 
     }
-    const handlePrint = () => {
+    const handlePrint = async () => {
+        try {
+            //const printBillData = await getPrintBill()
+            const htmlContent = generateHTMLContent(transectionList);
+            await Print.printAsync({ html: htmlContent });
 
+        } catch (error) {
+            console.log("error", error.response.data.message)
+        }
     }
+    const generateHTMLContent = (data) => {
+        return `
+        <div style="display: flex; justify-content: space-between; font-size: 32px;">
+          <p style="display: flex; justify-content: space-between;flex:1;">C_Code</p>
+          <p style="display: flex; justify-content: space-between;flex:1;">Name</p>
+          <p style="display: flex; justify-content: space-between;flex:1;">Group</p>
+        </div>
+        ${data.map(item => `
+          <div style="display: flex; justify-content: space-between; font-size: 32px;">
+            <p style="display: flex; justify-content: space-between;flex:1;">${item.c_code}</p>
+            <p style="display: flex; justify-content: space-between;flex:1;">${item.name}</p>
+            <p style="display: flex; justify-content: space-between;flex:1;">${item.group_}</p>
+          </div>
+        `).join('')}
+      `;
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.amountContainer}>
@@ -68,7 +96,7 @@ const Deposit = () => {
             <Text style={[styles.headingtext, { marginTop: 0 }]}>Deposit Amount: {amount}</Text>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-                    <Text style={styles.buttonText}>Update</Text>
+                    <Text style={styles.buttonText}>Deposit</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={handlePrint}>
                     <Text style={styles.buttonText}>Print</Text>
@@ -81,8 +109,11 @@ const Deposit = () => {
                     return (
                         <View style={styles.dataRow} key={item.tran_id}>
                             <Text style={styles.dataText}>{item.name}</Text>
-                            <Text style={[styles.dataText, { flex: 2 }]}>{item.group_}</Text>
+                            <Text style={{ marginRight: 8, marginLeft: 8 }}>{item.c_code}</Text>
                             <Text style={styles.dataText}>{item.mode}</Text>
+                            <Text style={styles.dataText}>{item.credit_amount}</Text>
+                            <Text style={styles.dataText}>{item.debit_amount}</Text>
+
                         </View>
                     );
                 })
@@ -130,7 +161,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         flex: 1,
     },
-    amountContainer:{
+    amountContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
