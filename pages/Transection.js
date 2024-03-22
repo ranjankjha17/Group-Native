@@ -74,7 +74,7 @@ export const Transection = () => {
     };
 
     useEffect(() => {
-        async function getImageData() {
+        async function getClinetAmountData() {
             try {
                 const { data } = await axios.get(`${URL}/get-client-amount`)
                 console.log(data?.data)
@@ -85,8 +85,8 @@ export const Transection = () => {
                 // setLoading(false)
             }
         }
-        getImageData()
-    }, [])
+        getClinetAmountData()
+    }, [modalVisible])
 
     const handleNameClick = (data) => {
         console.log('data',data)
@@ -158,9 +158,11 @@ export const Transection = () => {
                     ?.map((item, index) => (
                         <TouchableOpacity key={index} onPress={() => handleNameClick(item)}>
                             <View style={styles.dataRow}>
-                                <Text style={styles.dataText}>{item.c_code}</Text>
+                                <Text style={{fontSize:16,marginRight:20}}>{item.c_code}</Text>
                                 <Text style={[styles.dataText, { flex: 2 }]}>{item.name}</Text>
-                                <Text style={styles.dataText}>{item.c_amount}</Text>
+                                {/* <Text style={styles.dataText}>{item.c_amount}</Text> */}
+                                <Text style={item.c_amount < 1 ? styles.greenText : styles.redText}>{item.c_amount}</Text>
+
                             </View>
 
                         </TouchableOpacity>
@@ -307,5 +309,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         flex: 1,
     },
-
+    greenText: {
+        color: 'green',
+      },
+      redText: {
+        color: 'red',
+      },
+    
 })  

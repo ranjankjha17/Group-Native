@@ -60,7 +60,7 @@ export const Form2 = () => {
                 setGroupList(data.data)
                 setLoading(false)
             } catch (error) {
-                console.log(error)
+                console.log(error.response.data.message)
             }
         }
         getGroup()

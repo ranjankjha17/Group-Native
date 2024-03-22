@@ -11,6 +11,7 @@ import { NewGroupScreen } from './pages/NewGroupScreen';
 import { AuctionScreen } from './pages/AuctionScreen';
 import { Transection } from './pages/Transection';
 import { Report } from './pages/Report';
+import Deposit from './pages/Deposit';
 
 // const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -66,6 +67,7 @@ export default function App() {
           <Stack.Screen name="Auction" component={AuctionScreen} />
           <Stack.Screen name="Transection" component={Transection} />
           <Stack.Screen name="Report" component={Report} />
+          <Stack.Screen name="Deposit" component={Deposit} />
           </Stack.Navigator>
         </NavigationContainer>
         {/* <AuctionScreen/> */}
