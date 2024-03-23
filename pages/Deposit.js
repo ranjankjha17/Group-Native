@@ -10,6 +10,10 @@ const Deposit = () => {
     const [amount, setAmount] = useState('')
     const [loading, setLoading] = useState(true);
     const [transectionList, setTransectionList] = useState([])
+    const [sendTransectionData,setTransectionData]=useState({
+        trans_ids:[],
+        type:'',
+    })
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -57,7 +61,28 @@ const Deposit = () => {
     const cashAmount = cash_credit_amount - cash_debit_amount
     console.log(cashAmount)
 
-    const handleSubmit = () => {
+    const handleSubmit = async() => {
+        const trans_ids=transectionList.map(e=>e.tran_id)
+        console.log(trans_ids)
+        sendTransectionData.trans_ids=trans_ids
+        sendTransectionData.type='deposit'
+        try {
+            console.log(sendTransectionData)
+            const { data } = await axios.put(`https://reactnativeserver.vercel.app/update-transaction-type`, sendTransectionData)
+            const { message, success } = data;
+            if (success) {
+                // setFormData({
+                //     date: '',
+                //     group: '',
+
+                // })
+                alert("Your data is updated")
+            }
+        } catch (error) {
+            console.log('Error:', error.response.data.message);
+        }
+
+
 
     }
     const handlePrint = async () => {
@@ -67,24 +92,81 @@ const Deposit = () => {
             await Print.printAsync({ html: htmlContent });
 
         } catch (error) {
-            console.log("error", error.response.data.message)
+            console.log("error", error.response.data.message);
         }
     }
+    // const generateHTMLContent = (data) => {
+    //     return `
+    //     <div style="display: flex; justify-content: space-between; font-size: 32px;">
+    //       <p style="display: flex; justify-content: space-between;flex:1;">C_Code</p>
+    //       <p style="display: flex; justify-content: space-between;flex:1;">Name</p>
+    //       <p style="display: flex; justify-content: space-between;flex:1;">Mode</p>
+    //       <p style="display: flex; justify-content: space-between;flex:1;">Credit Amount</p>
+    //       <p style="display: flex; justify-content: space-between;flex:1;">Debit Amount</p>
+
+    //     </div>
+    //     ${data.map(item => `
+    //       <div style="display: flex; justify-content: space-between; font-size: 32px;">
+    //         <p style="display: flex; justify-content: space-between;flex:1;">${item.c_code}</p>
+    //         <p style="display: flex; justify-content: space-between;flex:1;">${item.name}</p>
+    //         <p style="display: flex; justify-content: space-between;flex:1;">${item.mode}</p>
+    //         <p style="display: flex; justify-content: space-between;flex:1;">${item.credit_amount}</p>
+    //         <p style="display: flex; justify-content: space-between;flex:1;">${item.debit_amount}</p>
+    //       </div>
+    //     `).join('')}
+    //     <hr style="border-top: 2px solid black;">
+
+    //   `;
+    // }
+
     const generateHTMLContent = (data) => {
-        return `
-        <div style="display: flex; justify-content: space-between; font-size: 32px;">
-          <p style="display: flex; justify-content: space-between;flex:1;">C_Code</p>
-          <p style="display: flex; justify-content: space-between;flex:1;">Name</p>
-          <p style="display: flex; justify-content: space-between;flex:1;">Group</p>
-        </div>
-        ${data.map(item => `
+        // Calculate total credit and debit amounts
+        const UPIList = transectionList.filter(e => e.mode === 'UPI')
+        const UPIAmount = UPIList.reduce((sum, transaction) => sum + transaction.credit_amount, 0);
+        //console.log(UPIAmount)
+    
+        const cashList = transectionList.filter(e => e.mode === 'Cash')
+        const cash_credit_amount = cashList.reduce((sum, transaction) => sum + transaction.credit_amount, 0);
+        //const cashList = transectionList.filter(e => e.mode === 'Cash')
+        const cash_debit_amount = cashList.reduce((sum, transaction) => sum + transaction.debit_amount, 0);
+        const cashAmount = cash_credit_amount - cash_debit_amount
+       // console.log(cashAmount)
+    
+        // Generate HTML content for data
+        const dataHTML = data.map(item => `
           <div style="display: flex; justify-content: space-between; font-size: 32px;">
-            <p style="display: flex; justify-content: space-between;flex:1;">${item.c_code}</p>
-            <p style="display: flex; justify-content: space-between;flex:1;">${item.name}</p>
-            <p style="display: flex; justify-content: space-between;flex:1;">${item.group_}</p>
+            <p style="display: flex; justify-content: space-between; flex:1;">${item.c_code}</p>
+            <p style="display: flex; justify-content: space-between; flex:1;">${item.name}</p>
+            <p style="display: flex; justify-content: space-between; flex:1;">${item.mode}</p>
+            <p style="display: flex; justify-content: space-between; flex:1;">${item.credit_amount}</p>
+            <p style="display: flex; justify-content: space-between; flex:1;">${item.debit_amount}</p>
           </div>
-        `).join('')}
-      `;
+        `).join('');
+
+        // Generate HTML content for totals
+        const totalsHTML = `
+          <div style="display: flex; justify-content: space-between; font-size: 32px;">
+            <p style="display: flex; justify-content: space-between; flex:1;"><strong>UPI:${UPIAmount}</strong></p>
+            <p style="display: flex; justify-content: space-between; flex:1;"><strong>Cash:${cashAmount}</strong></p>
+            <p style="display: flex; justify-content: space-between; flex:2;"><strong>Deposit Amount:${amount}</strong></p>
+          </div>
+        `;
+
+        // Combine data HTML, horizontal line, and totals HTML
+        return `
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: 32px;">
+            <p style="display: flex; justify-content: space-between; flex:1;"><strong>C_Code</strong></p>
+            <p style="display: flex; justify-content: space-between; flex:1;"><strong>Name</strong></p>
+            <p style="display: flex; justify-content: space-between; flex:1;"><strong>Mode</strong></p>
+            <p style="display: flex; justify-content: space-between; flex:1;"><strong>Credit Amount</strong></p>
+            <p style="display: flex; justify-content: space-between; flex:1;"><strong>Debit Amount</strong></p>
+        </div>
+            ${dataHTML}
+            <hr style="border-top: 2px solid black;">
+            ${totalsHTML}
+          </div>
+        `;
     }
 
     return (

@@ -58,6 +58,9 @@ const handleDepositButtonClick=()=>{
               <TouchableOpacity style={DashboardStyles.button} onPress={handleTransectionButtonClick} >
                 <Text style={DashboardStyles.buttonText}>Transection</Text>
               </TouchableOpacity>
+              <TouchableOpacity style={DashboardStyles.button} onPress={""} >
+                <Text style={DashboardStyles.buttonText}>Agent Account</Text>
+              </TouchableOpacity>
               <TouchableOpacity style={DashboardStyles.button} onPress={handleReportButtonClick} >
                 <Text style={DashboardStyles.buttonText}>Report</Text>
               </TouchableOpacity>
