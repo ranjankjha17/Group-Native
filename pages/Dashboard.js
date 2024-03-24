@@ -36,6 +36,10 @@ export const Dashboard = () => {
 const handleDepositButtonClick=()=>{
   navigation.navigate('Deposit')
 }
+const handleAggentAccountButtonClick=()=>{
+  navigation.navigate('AGAccount')
+}
+
   return (
     <ScrollView style={{ backgroundColor: "#fff" }}>
       <Logout />
@@ -58,7 +62,7 @@ const handleDepositButtonClick=()=>{
               <TouchableOpacity style={DashboardStyles.button} onPress={handleTransectionButtonClick} >
                 <Text style={DashboardStyles.buttonText}>Transection</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={DashboardStyles.button} onPress={""} >
+              <TouchableOpacity style={DashboardStyles.button} onPress={handleAggentAccountButtonClick} >
                 <Text style={DashboardStyles.buttonText}>Agent Account</Text>
               </TouchableOpacity>
               <TouchableOpacity style={DashboardStyles.button} onPress={handleReportButtonClick} >

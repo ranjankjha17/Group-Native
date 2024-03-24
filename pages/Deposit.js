@@ -10,9 +10,9 @@ const Deposit = () => {
     const [amount, setAmount] = useState('')
     const [loading, setLoading] = useState(true);
     const [transectionList, setTransectionList] = useState([])
-    const [sendTransectionData,setTransectionData]=useState({
-        trans_ids:[],
-        type:'',
+    const [sendTransectionData, setTransectionData] = useState({
+        trans_ids: [],
+        type: '',
     })
     useEffect(() => {
         const fetchData = async () => {
@@ -61,22 +61,21 @@ const Deposit = () => {
     const cashAmount = cash_credit_amount - cash_debit_amount
     console.log(cashAmount)
 
-    const handleSubmit = async() => {
-        const trans_ids=transectionList.map(e=>e.tran_id)
+    const handleSubmit = async () => {
+        const trans_ids = transectionList.map(e => e.tran_id)
         console.log(trans_ids)
-        sendTransectionData.trans_ids=trans_ids
-        sendTransectionData.type='deposit'
+        sendTransectionData.trans_ids = trans_ids
+        sendTransectionData.type = 'deposit'
+        sendTransectionData.sheetnumber = parseInt(transectionList[0].sheetnumber) + 1
+        // console.log(transectionList[0].sheetnumber+1)
         try {
             console.log(sendTransectionData)
             const { data } = await axios.put(`https://reactnativeserver.vercel.app/update-transaction-type`, sendTransectionData)
             const { message, success } = data;
             if (success) {
-                // setFormData({
-                //     date: '',
-                //     group: '',
-
-                // })
-                alert("Your data is updated")
+                setTransectionList([])
+                setAmount('')
+                alert("Your data is deposited")
             }
         } catch (error) {
             console.log('Error:', error.response.data.message);
@@ -124,14 +123,14 @@ const Deposit = () => {
         const UPIList = transectionList.filter(e => e.mode === 'UPI')
         const UPIAmount = UPIList.reduce((sum, transaction) => sum + transaction.credit_amount, 0);
         //console.log(UPIAmount)
-    
+
         const cashList = transectionList.filter(e => e.mode === 'Cash')
         const cash_credit_amount = cashList.reduce((sum, transaction) => sum + transaction.credit_amount, 0);
         //const cashList = transectionList.filter(e => e.mode === 'Cash')
         const cash_debit_amount = cashList.reduce((sum, transaction) => sum + transaction.debit_amount, 0);
         const cashAmount = cash_credit_amount - cash_debit_amount
-       // console.log(cashAmount)
-    
+        // console.log(cashAmount)
+
         // Generate HTML content for data
         const dataHTML = data.map(item => `
           <div style="display: flex; justify-content: space-between; font-size: 32px;">

@@ -12,6 +12,7 @@ import { AuctionScreen } from './pages/AuctionScreen';
 import { Transection } from './pages/Transection';
 import { Report } from './pages/Report';
 import Deposit from './pages/Deposit';
+import { AgentAccount } from './pages/AgentAccount';
 
 // const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -68,9 +69,10 @@ export default function App() {
           <Stack.Screen name="Transection" component={Transection} />
           <Stack.Screen name="Report" component={Report} />
           <Stack.Screen name="Deposit" component={Deposit} />
+          <Stack.Screen name="AGAccount" component={AgentAccount} />
           </Stack.Navigator>
         </NavigationContainer>
-        {/* <AuctionScreen/> */}
+        {/* <AgentAccount/> */}
       </Provider>
       </ErrorBoundary>
     // <Transection2/>
